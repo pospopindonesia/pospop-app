@@ -135,9 +135,9 @@
                     <i class="fas fa-download mr-2"></i> Install Aplikasi
                 </button>
                 
-                <a href="https://pospopindonesia.github.io/pospop-app/demo.html" target="_blank" rel="noopener noreferrer"
+                <a href="https://pospop.digitalove.id" target="_blank" rel="noopener noreferrer"
                    class="block w-full border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-3 rounded-xl md:rounded-2xl text-center transition-all">
-                    <i class="fas fa-external-link-alt mr-2"></i> demo
+                    <i class="fas fa-external-link-alt mr-2"></i> Pelajari Lebih Lanjut
                 </a>
             </div>
             
@@ -147,7 +147,7 @@
                        class="text-center bg-blue-50 text-blue-700 hover:bg-blue-100 py-2 rounded-xl text-xs font-medium transition-colors">
                         <i class="fas fa-shopping-cart mr-1"></i> Beli Sekarang
                     </a>
-                    <a href="https://pospopindonesia.github.io/pospop-app/tutorial-awal.html" target="_blank" rel="noopener noreferrer"
+                    <a href="/tutorial-awal.html" target="_blank" rel="noopener noreferrer"
                        class="text-center bg-purple-50 text-purple-700 hover:bg-purple-100 py-2 rounded-xl text-xs font-medium transition-colors">
                         <i class="fas fa-book-open mr-1"></i> Tutorial Setup
                     </a>
@@ -186,6 +186,11 @@
             </div>
             
             <div class="flex items-center gap-1 md:gap-2">
+                <button onclick="toggleFullscreen()" 
+                        class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
+                        title="Layar Penuh">
+                    <i class="fas fa-expand text-sm"></i>
+                </button>
                 
                 <button onclick="refreshApp()" 
                         class="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-xl transition-colors"
@@ -302,6 +307,18 @@
             }
         }
 
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    showNotification('Gagal masuk mode layar penuh', 'error');
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
         function checkIOS() {
             if (localStorage.getItem('ios_guide_hidden') === 'true') return;
             
@@ -381,6 +398,9 @@
             if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
                 e.preventDefault();
                 refreshApp();
+            }
+            if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
             }
             // Enter key to submit URL
             if (e.key === 'Enter' && document.activeElement === scriptUrlInput) {
