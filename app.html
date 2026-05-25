@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#764ba2">
     <title>POSPOP - Aplikasi Kasir Online</title>
-    <link rel="manifest" href="manifest.json">
+    
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/svg+xml" href="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png"> <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             font-family: 'Inter', sans-serif;
@@ -16,10 +19,10 @@
         }
         
         body { 
-            height: 100vh; 
+            /* Perbaikan: Jangan kunci tinggi body saat setup agar keyboard mobile tidak menutupi tombol */
+            min-height: 100vh; 
             display: flex; 
             flex-direction: column; 
-            overflow: hidden; 
             margin: 0; 
             background-image: url('https://pospop.digitalove.id/images/bgbgbg.webp');
             background-size: cover;
@@ -27,13 +30,19 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
+        /* Class ini akan ditambahkan ke body saat iframe aktif */
+        .app-active {
+            height: 100vh;
+            overflow: hidden;
+        }
         
         .iframe-wrapper { 
             flex-grow: 1; 
             width: 100%; 
             border: none; 
             display: block; 
-            height: calc(100vh - 64px); /* Mengurangi tinggi header */
+            height: calc(100vh - 64px); 
         }
         
         .fade-in { 
@@ -73,25 +82,22 @@
             transform: translateY(-2px);
         }
         
-        /* iOS Guide Styling */
         .ios-guide-card {
             background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
             box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* Responsive adjustments */
         @media (max-width: 640px) {
             .iframe-wrapper {
-                height: calc(100vh - 56px); /* Lebih kecil untuk mobile */
+                height: calc(100vh - 56px); 
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Setup Screen -->
-    <div id="setup-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-6 fade-in">
+    <div id="setup-screen" class="min-h-screen z-[100] flex flex-col items-center justify-center p-6 fade-in">
         <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-md">
             <div class="text-center mb-6 md:mb-8">
                 <div class="flex justify-center mb-4">
@@ -110,7 +116,7 @@
                 <label for="script-url" class="block text-sm font-medium text-gray-700 mb-2">
                     <i class="fas fa-link mr-2 text-blue-500"></i> Link Google Apps Script
                 </label>
-                <input type="text" id="script-url" 
+                <input type="url" id="script-url" autocomplete="off"
                        placeholder="https://script.google.com/macros/s/.../exec" 
                        class="w-full p-3 md:p-4 bg-gray-50 border border-gray-200 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all shadow-sm text-sm">
                 <p class="text-xs text-gray-500 mt-2">
@@ -129,15 +135,15 @@
                     <i class="fas fa-download mr-2"></i> Install Aplikasi
                 </button>
                 
-                <a href="https://pospopindonesia.github.io/pospop-app/demo.html" target="_blank" rel="noopener noreferrer"
+                <a href="https://pospop.digitalove.id" target="_blank" rel="noopener noreferrer"
                    class="block w-full border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-3 rounded-xl md:rounded-2xl text-center transition-all">
-                    <i class="fas fa-external-link-alt mr-2"></i> Lihat Demo
+                    <i class="fas fa-external-link-alt mr-2"></i> Pelajari Lebih Lanjut
                 </a>
             </div>
             
             <div class="mt-6 pt-6 border-t border-gray-100">
                 <div class="grid grid-cols-2 gap-3">
-                    <a href="https://pospop.myscalev.com/pembayaran" target="_blank" rel="noopener noreferrer"
+                    <a href="https://pospop.myscalev.com/c/checkout?variant_ids=428703&qty=1" target="_blank" rel="noopener noreferrer"
                        class="text-center bg-blue-50 text-blue-700 hover:bg-blue-100 py-2 rounded-xl text-xs font-medium transition-colors">
                         <i class="fas fa-shopping-cart mr-1"></i> Beli Sekarang
                     </a>
@@ -149,14 +155,13 @@
             </div>
         </div>
         
-        <div class="mt-6 md:mt-8 text-center">
+        <div class="mt-6 md:mt-8 text-center pb-8">
             <p class="text-white/80 text-xs md:text-sm mb-2">Solusi Kasir Gratis untuk Semua Usaha</p>
             <p class="text-white/60 text-xs">POSPOP Bridge v2.0 • © 2023</p>
         </div>
     </div>
 
-    <!-- App Header -->
-    <header id="app-header" class="hidden bg-white shadow-lg px-4 py-3 flex items-center justify-between z-50">
+    <header id="app-header" class="hidden bg-white shadow-lg px-4 py-3 flex items-center justify-between z-50 w-full">
         <div class="flex items-center gap-3">
             <div class="flex items-center gap-2">
                 <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP Logo" class="h-6 md:h-8">
@@ -181,11 +186,6 @@
             </div>
             
             <div class="flex items-center gap-1 md:gap-2">
-                <button onclick="toggleFullscreen()" 
-                        class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
-                        title="Layar Penuh">
-                    <i class="fas fa-expand text-sm"></i>
-                </button>
                 
                 <button onclick="refreshApp()" 
                         class="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-xl transition-colors"
@@ -203,12 +203,10 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main id="app-main" class="hidden flex-grow overflow-hidden">
-        <iframe id="app-iframe" src="" class="iframe-wrapper" title="POSPOP Aplikasi Kasir"></iframe>
+    <main id="app-main" class="hidden flex-grow overflow-hidden w-full">
+        <iframe id="app-iframe" src="" class="iframe-wrapper" title="POSPOP Aplikasi Kasir" allow="clipboard-read; clipboard-write" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"></iframe>
     </main>
 
-    <!-- iOS Installation Guide -->
     <div id="ios-guide" class="fixed bottom-6 inset-x-4 md:inset-x-6 z-[200] hidden fade-in">
         <div class="ios-guide-card text-white p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl flex items-center justify-between">
             <div class="flex items-start gap-3">
@@ -231,7 +229,6 @@
     </div>
 
     <script>
-        // DOM Elements
         const setupScreen = document.getElementById('setup-screen');
         const appHeader = document.getElementById('app-header');
         const appMain = document.getElementById('app-main');
@@ -240,26 +237,17 @@
         const iosGuide = document.getElementById('ios-guide');
         const scriptUrlInput = document.getElementById('script-url');
 
-        // Initialize app on load
         window.onload = () => {
-            updateTime();
             const savedUrl = localStorage.getItem('apps_script_url');
             if (savedUrl) {
                 showApp(savedUrl);
                 setTimeout(checkIOS, 2000);
             } else {
                 setupScreen.classList.remove('hidden');
-                // Auto-focus input field
-                scriptUrlInput.focus();
+                // scriptUrlInput.focus(); // Dinonaktifkan di mobile agar tidak otomatis memunculkan keyboard
             }
         };
 
-        // Update time function (if needed elsewhere)
-        function updateTime() {
-            // Could be used for real-time clock in footer
-        }
-
-        // Save URL and load app
         function saveUrl() {
             const urlInput = scriptUrlInput.value.trim();
             if (isValidScriptUrl(urlInput)) {
@@ -267,54 +255,53 @@
                 showApp(urlInput);
                 setTimeout(checkIOS, 2000);
             } else {
-                showNotification('URL tidak valid! Pastikan menggunakan link Google Apps Script yang benar.', 'error');
+                showNotification('URL tidak valid! Pastikan link dari Google Apps Script.', 'error');
             }
         }
 
-        // Validate Google Apps Script URL
-        function isValidScriptUrl(url) {
-            return url.includes('script.google.com') && url.includes('/exec');
+        // Perbaikan: Validasi URL yang lebih ketat
+        function isValidScriptUrl(urlString) {
+            try {
+                const url = new URL(urlString);
+                return url.hostname === 'script.google.com' && url.pathname.endsWith('/exec');
+            } catch (e) {
+                return false;
+            }
         }
 
-        // Show main app interface
         function showApp(url) {
+            // Perbaikan CSS Body saat app berjalan
+            document.body.classList.add('app-active');
+            
             setupScreen.classList.add('hidden');
             appHeader.classList.remove('hidden');
             appMain.classList.remove('hidden');
-            appIframe.src = url;
+            
+            // Tambahkan parameter unik agar tidak cache iframe lama
+            const cacheBuster = url.includes('?') ? '&cb=' : '?cb=';
+            appIframe.src = url + cacheBuster + new Date().getTime();
         }
 
-        // Clear cache and logout
         function clearCache() {
             if (confirm('Apakah Anda yakin ingin keluar dari aplikasi?\nAnda perlu memasukkan link Apps Script kembali.')) {
                 localStorage.removeItem('apps_script_url');
-                localStorage.removeItem('ios_guide_hidden');
                 location.reload();
             }
         }
 
-        // Refresh iframe content
+        // Perbaikan: Cara refresh iframe yang lebih aman dari CORS
         function refreshApp() {
-            if (appIframe.src) {
-                appIframe.src = appIframe.src;
-                showNotification('Aplikasi direfresh', 'success');
+            const savedUrl = localStorage.getItem('apps_script_url');
+            if (savedUrl) {
+                appIframe.src = 'about:blank'; // Kosongkan dulu
+                setTimeout(() => {
+                    const cacheBuster = savedUrl.includes('?') ? '&cb=' : '?cb=';
+                    appIframe.src = savedUrl + cacheBuster + new Date().getTime();
+                    showNotification('Aplikasi diperbarui', 'success');
+                }, 100);
             }
         }
 
-        // Toggle fullscreen mode
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.error(`Fullscreen error: ${err.message}`);
-                });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
-
-        // Check if iOS and show installation guide
         function checkIOS() {
             if (localStorage.getItem('ios_guide_hidden') === 'true') return;
             
@@ -328,19 +315,19 @@
             }
         }
 
-        // Hide iOS guide
         function hideIOSGuide() {
             iosGuide.classList.add('hidden');
             localStorage.setItem('ios_guide_hidden', 'true');
         }
 
-        // PWA Installation
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-            if (!isPWA && !localStorage.getItem('apps_script_url')) {
+            
+            // Perbaikan logika tombol install
+            if (!isPWA) {
                 installBtn.classList.remove('hidden');
             }
         });
@@ -350,14 +337,17 @@
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    showNotification('Aplikasi berhasil diinstall!', 'success');
+                    showNotification('Terima kasih telah menginstall POSPOP!', 'success');
                     installBtn.classList.add('hidden');
                 }
                 deferredPrompt = null;
             }
         });
 
-        // Notification system
+        window.addEventListener('appinstalled', () => {
+            installBtn.classList.add('hidden');
+        });
+
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `fixed top-4 right-4 z-[1000] px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
@@ -374,29 +364,27 @@
             document.body.appendChild(notification);
             setTimeout(() => {
                 notification.style.transform = 'translateX(100%)';
+                notification.style.opacity = '0';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
 
-        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(err => {
-                    console.error('Service Worker registration failed:', err);
+                navigator.serviceWorker.register('/sw.js').catch(err => {
+                    console.log('SW Registration Failed');
                 });
             });
         }
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + R to refresh
             if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
                 e.preventDefault();
                 refreshApp();
             }
-            // Escape to exit fullscreen
-            if (e.key === 'Escape' && document.fullscreenElement) {
-                document.exitFullscreen();
+            // Enter key to submit URL
+            if (e.key === 'Enter' && document.activeElement === scriptUrlInput) {
+                saveUrl();
             }
         });
     </script>
