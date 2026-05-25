@@ -2,7 +2,7 @@
   "name": "POPPOP POS Kasir",
   "short_name": "POPPOP",
   "description": "Aplikasi POS dan Kasir Tanpa Langganan",
-  "start_url": "/",
+  "start_url": "https://pospopindonesia.github.io/pospop-app/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#764ba2",
