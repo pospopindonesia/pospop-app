@@ -1,6 +1,6 @@
 {
-  "name": "POPPOP POS Kasir",
-  "short_name": "POPPOP",
+  "name": "POSPOP POS Kasir",
+  "short_name": "POSPOP",
   "description": "Aplikasi POS dan Kasir Tanpa Langganan",
   "start_url": "https://pospopindonesia.github.io/pospop-app/",
   "display": "standalone",
