@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#764ba2">
+    <title>Demo POSPOP - Aplikasi Kasir</title>
+    
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            margin: 0; 
+            background-color: #f8fafc;
+            overflow: hidden;
+        }
+        
+        .iframe-wrapper { 
+            flex-grow: 1; 
+            width: 100%; 
+            border: none; 
+            display: block; 
+            height: calc(100vh - 64px); 
+        }
+        
+        .fade-in { 
+            animation: fadeIn 0.5s ease-out forwards; 
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 1s;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
+
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(118, 75, 162, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 640px) {
+            .iframe-wrapper {
+                height: calc(100vh - 56px); 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="app-header" class="bg-white shadow-md px-4 py-3 flex items-center justify-between z-50 w-full fade-in">
+        <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2">
+                <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP Logo" class="h-6 md:h-8">
+            </div>
+            <div class="hidden md:flex items-center gap-1 text-xs">
+                <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-bold uppercase tracking-wide">Mode Demo</span>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-2 md:gap-3">
+            <div class="hidden sm:flex items-center gap-4 text-sm">
+                <div class="text-right">
+                    <div class="text-gray-500 text-xs">Versi</div>
+                    <div class="font-medium text-gray-700">2.0 Demo</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-1 md:gap-2">
+                <button onclick="toggleFullscreen()" 
+                        class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
+                        title="Layar Penuh">
+                    <i class="fas fa-expand text-sm"></i>
+                </button>
+                
+                <button onclick="refreshApp()" 
+                        class="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-xl transition-colors"
+                        title="Refresh">
+                    <i class="fas fa-redo text-sm"></i>
+                </button>
+                
+                <button onclick="exitDemo()" 
+                        class="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-xl transition-all text-sm font-medium"
+                        title="Keluar Demo">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="hidden sm:inline">Keluar Demo</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="demo-credentials" class="fixed top-20 right-4 md:right-6 z-[100] w-64 glass-panel rounded-xl p-4 slide-in-right">
+        <div class="flex justify-between items-start mb-3">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-key text-yellow-500"></i>
+                <h3 class="font-bold text-gray-800 text-sm">Akses Demo</h3>
+            </div>
+            <button onclick="document.getElementById('demo-credentials').style.display='none'" class="text-gray-400 hover:text-red-500 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="space-y-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <div class="flex justify-between items-center">
+                <span>Username :</span>
+                <span class="font-mono font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded copy-text cursor-pointer hover:bg-purple-200 transition" onclick="copyText('demo', this)">demo</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span>Password :</span>
+                <span class="font-mono font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded copy-text cursor-pointer hover:bg-purple-200 transition" onclick="copyText('demo', this)">demo</span>
+            </div>
+        </div>
+        <p class="text-[10px] text-gray-400 mt-2 text-center italic">*Klik teks untuk menyalin</p>
+    </div>
+
+    <main id="app-main" class="flex-grow overflow-hidden w-full fade-in">
+        <iframe id="app-iframe" src="" class="iframe-wrapper" title="POSPOP Aplikasi Kasir" allow="clipboard-read; clipboard-write" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"></iframe>
+    </main>
+
+    <script>
+        // URL Demo yang sudah di-hardcode
+        const DEMO_URL = "https://script.google.com/macros/s/AKfycbxSZcmr3jOTGnm9t_7oT0Mno_9sFIgk77QuIfZiyaiuComKmGlAohYbiwLQjMHGqStMhQ/exec";
+        const appIframe = document.getElementById('app-iframe');
+
+        // Langsung muat aplikasi saat halaman selesai diload
+        window.onload = () => {
+            loadApp();
+        };
+
+        function loadApp() {
+            // Tambahkan parameter unik agar tidak cache iframe lama
+            const cacheBuster = DEMO_URL.includes('?') ? '&cb=' : '?cb=';
+            appIframe.src = DEMO_URL + cacheBuster + new Date().getTime();
+        }
+
+        // Refresh iframe khusus untuk demo
+        function refreshApp() {
+            appIframe.src = 'about:blank'; // Kosongkan sementara
+            setTimeout(() => {
+                loadApp();
+                showNotification('Demo diperbarui', 'success');
+            }, 100);
+        }
+
+        // Keluar dari mode demo (Kembali ke index)
+        function exitDemo() {
+            window.location.href = 'index.html';
+        }
+
+        // Toggle mode fullscreen
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    showNotification('Gagal masuk mode layar penuh', 'error');
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Fungsi praktis untuk menyalin teks (username/password)
+        function copyText(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = element.innerText;
+                element.innerText = 'Copied!';
+                element.classList.replace('text-purple-700', 'text-green-600');
+                element.classList.replace('bg-purple-100', 'bg-green-100');
+                
+                setTimeout(() => {
+                    element.innerText = originalText;
+                    element.classList.replace('text-green-600', 'text-purple-700');
+                    element.classList.replace('bg-green-100', 'bg-purple-100');
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        // Sistem Notifikasi Cepat
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-[1000] px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
+                type === 'error' ? 'bg-red-500 text-white' :
+                type === 'success' ? 'bg-green-500 text-white' :
+                'bg-blue-500 text-white'
+            }`;
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                    <span class="text-sm font-medium">${message}</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Shortcut Keyboard
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + R untuk refresh iframe, bukan seluruh halaman
+            if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                e.preventDefault();
+                refreshApp();
+            }
+            if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
