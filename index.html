@@ -694,7 +694,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 // Pastikan Anda membuat file sw.js di direktori root aplikasi
-                navigator.serviceWorker.register('/sw.js').catch(err => {
+                navigator.serviceWorker.register('https://pospopindonesia.github.io/pospop-app/sw.js').catch(err => {
                     console.log('Service Worker gagal didaftarkan:', err);
                 });
             });
