@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syarat dan Ketentuan - POSPOP</title>
+    <link rel="icon" href="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --warning-color: #dc2626;
+            --warning-bg: #fef2f2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            height: 70px;
+            width: auto;
+        }
+        
+        h1 {
+            color: var(--dark-color);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        .last-updated {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #f1f5f9;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .lang-btn:hover:not(.active) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .tos-content {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .tos-version {
+            display: none;
+        }
+        
+        .tos-version.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 30px 0 15px;
+            font-size: 22px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        h2:first-child {
+            margin-top: 0;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin: 20px 0 10px;
+            font-size: 18px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+        
+        .warning-box {
+            background-color: var(--warning-bg);
+            padding: 20px;
+            border-left: 4px solid var(--warning-color);
+            margin: 25px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .info-box {
+            background-color: #f0f9ff;
+            padding: 20px;
+            border-left: 4px solid var(--primary-color);
+            margin: 25px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .info-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .important-note {
+            background-color: #fffbeb;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: 2px solid #f59e0b;
+        }
+        
+        .important-note h4 {
+            color: #d97706;
+            margin-bottom: 10px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .important-note h4::before {
+            content: "⚠️";
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #f8fafc;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: #e2e8f0;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .acceptance-section {
+            background-color: #ecfdf5;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 2px solid #10b981;
+            text-align: center;
+        }
+        
+        .acceptance-section h3 {
+            color: #047857;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px 0;
+            border-top: 1px solid var(--border-color);
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            margin-top: 15px;
+        }
+        
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .tos-content {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tos-content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .logo {
+                height: 50px;
+            }
+            
+            .language-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .lang-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            ul, ol {
+                margin-left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP Logo" class="logo">
+            </div>
+            <h1>Terms of Service - Syarat dan Ketentuan</h1>
+            <p class="subtitle">Syarat dan ketentuan penggunaan POSPOP - Aplikasi POS dan Kasir tanpa berlangganan</p>
+            <p class="last-updated">Last Updated / Terakhir Diperbarui: January 21, 2026 / 21 Januari 2026</p>
+            
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="en">English Version</button>
+                <button class="lang-btn" data-lang="id">Versi Bahasa Indonesia</button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="tos-content">
+                <!-- English Version -->
+                <div class="tos-version active" id="english-version">
+                    <h2>Terms of Service for POSPOP</h2>
+                    <p><strong>Effective Date: January 21, 2026</strong></p>
+                    
+                    <div class="important-note">
+                        <h4>Important Notice</h4>
+                        <p>By accessing or using POSPOP ("the App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.</p>
+                    </div>
+                    
+                    <h3>1. Acceptance of Terms</h3>
+                    <p>POSPOP - Aplikasi POS dan Kasir tanpa berlangganan ("the App") is provided as a free service. By using the App, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+                    
+                    <h3>2. Description of Service</h3>
+                    <p>POSPOP is a Point of Sale system built using Google Apps Script that operates within Google Sheets. The App provides:</p>
+                    <ul>
+                        <li>Sales transaction recording</li>
+                        <li>Inventory management</li>
+                        <li>Sales reporting</li>
+                        <li>Cashier management</li>
+                    </ul>
+                    <p>The App operates entirely within your Google Account and Google Sheets.</p>
+                    
+                    <h3>3. No Subscription Model</h3>
+                    <p>POSPOP is provided as a free application without subscription fees. However:</p>
+                    <ul>
+                        <li>The App requires a valid Google Account</li>
+                        <li>You are responsible for any Google Sheets storage limits according to your Google Account type</li>
+                        <li>We reserve the right to introduce premium features in the future, but core functionality will remain free</li>
+                    </ul>
+                    
+                    <h3>4. User Responsibilities</h3>
+                    <p>As a user of POSPOP, you agree to:</p>
+                    <ul>
+                        <li>Use the App only for lawful purposes</li>
+                        <li>Maintain the security of your Google Account credentials</li>
+                        <li>Regularly back up your data stored in Google Sheets</li>
+                        <li>Not use the App to store or process sensitive personal data without proper security measures</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <h4>Data Responsibility Notice</h4>
+                        <p>You are solely responsible for the data you input into the App. We do not have access to your data and cannot recover lost or corrupted data.</p>
+                    </div>
+                    
+                    <h3>5. Limitations of Liability</h3>
+                    <p>To the maximum extent permitted by law:</p>
+                    <ul>
+                        <li>The App is provided "as is" without warranties of any kind</li>
+                        <li>We are not liable for any data loss, business interruption, or damages resulting from the use of the App</li>
+                        <li>We do not guarantee uninterrupted or error-free operation of the App</li>
+                        <li>You acknowledge that the App depends on Google Services, and disruptions in these services may affect App functionality</li>
+                    </ul>
+                    
+                    <h3>6. Intellectual Property</h3>
+                    <p>The POSPOP application, including its code, design, and documentation, is protected by copyright. You may:</p>
+                    <ul>
+                        <li>Use the App for your personal or business needs</li>
+                        <li>Customize the Google Sheets templates for your specific requirements</li>
+                    </ul>
+                    <p>You may not:</p>
+                    <ul>
+                        <li>Redistribute, sell, or lease the App</li>
+                        <li>Reverse engineer or attempt to extract the source code</li>
+                        <li>Claim the App as your own creation</li>
+                    </ul>
+                    
+                    <h3>7. Account Suspension or Termination</h3>
+                    <p>We reserve the right to suspend or terminate access to the App if:</p>
+                    <ul>
+                        <li>You violate these Terms of Service</li>
+                        <li>You use the App for illegal activities</li>
+                        <li>Your use of the App negatively impacts other users or the service itself</li>
+                    </ul>
+                    
+                    <h3>8. Changes to Terms</h3>
+                    <p>We may update these Terms of Service from time to time. Continued use of the App after changes constitutes acceptance of the new terms.</p>
+                    
+                    <h3>9. Governing Law</h3>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of Indonesia, without regard to its conflict of law provisions.</p>
+                    
+                    <div class="info-box">
+                        <h4>Support and Contact</h4>
+                        <p>For technical support or questions about these Terms:</p>
+                        <p><strong>Email:</strong> pospopindonesia@gmail.com</p>
+                        <p>We aim to respond to inquiries within 3 business days.</p>
+                    </div>
+                    
+                    <div class="acceptance-section">
+                        <h3>Acceptance of Terms</h3>
+                        <p>By using POSPOP, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+                        <p><strong>Last Updated: January 21, 2026</strong></p>
+                    </div>
+                </div>
+                
+                <!-- Indonesian Version -->
+                <div class="tos-version" id="indonesian-version">
+                    <h2>Syarat dan Ketentuan POSPOP</h2>
+                    <p><strong>Tanggal Efektif: 21 Januari 2026</strong></p>
+                    
+                    <div class="important-note">
+                        <h4>Pemberitahuan Penting</h4>
+                        <p>Dengan mengakses atau menggunakan POSPOP ("Aplikasi"), Anda setuju untuk terikat dengan Syarat dan Ketentuan ini. Jika Anda tidak setuju dengan syarat-syarat ini, harap jangan menggunakan Aplikasi.</p>
+                    </div>
+                    
+                    <h3>1. Penerimaan Syarat</h3>
+                    <p>POSPOP - Aplikasi POS dan Kasir tanpa berlangganan ("Aplikasi") disediakan sebagai layanan gratis. Dengan menggunakan Aplikasi, Anda mengakui bahwa Anda telah membaca, memahami, dan setuju untuk terikat dengan Syarat dan Ketentuan ini.</p>
+                    
+                    <h3>2. Deskripsi Layanan</h3>
+                    <p>POSPOP adalah sistem Point of Sale yang dibangun menggunakan Google Apps Script yang beroperasi dalam Google Sheets. Aplikasi ini menyediakan:</p>
+                    <ul>
+                        <li>Pencatatan transaksi penjualan</li>
+                        <li>Manajemen inventaris</li>
+                        <li>Pelaporan penjualan</li>
+                        <li>Manajemen kasir</li>
+                    </ul>
+                    <p>Aplikasi beroperasi sepenuhnya dalam Akun Google dan Google Sheets Anda.</p>
+                    
+                    <h3>3. Tanpa Model Berlangganan</h3>
+                    <p>POSPOP disediakan sebagai aplikasi gratis tanpa biaya berlangganan. Namun:</p>
+                    <ul>
+                        <li>Aplikasi memerlukan Akun Google yang valid</li>
+                        <li>Anda bertanggung jawab atas batas penyimpanan Google Sheets sesuai dengan jenis Akun Google Anda</li>
+                        <li>Kami berhak untuk memperkenalkan fitur premium di masa depan, tetapi fungsionalitas inti akan tetap gratis</li>
+                    </ul>
+                    
+                    <h3>4. Tanggung Jawab Pengguna</h3>
+                    <p>Sebagai pengguna POSPOP, Anda setuju untuk:</p>
+                    <ul>
+                        <li>Menggunakan Aplikasi hanya untuk tujuan yang sah</li>
+                        <li>Menjaga keamanan kredensial Akun Google Anda</li>
+                        <li>Secara teratur mencadangkan data Anda yang disimpan di Google Sheets</li>
+                        <li>Tidak menggunakan Aplikasi untuk menyimpan atau memproses data pribadi sensitif tanpa tindakan keamanan yang tepat</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <h4>Pemberitahuan Tanggung Jawab Data</h4>
+                        <p>Anda sepenuhnya bertanggung jawab atas data yang Anda masukkan ke dalam Aplikasi. Kami tidak memiliki akses ke data Anda dan tidak dapat memulihkan data yang hilang atau rusak.</p>
+                    </div>
+                    
+                    <h3>5. Batasan Tanggung Jawab</h3>
+                    <p>Sejauh diizinkan oleh hukum:</p>
+                    <ul>
+                        <li>Aplikasi disediakan "sebagaimana adanya" tanpa jaminan apa pun</li>
+                        <li>Kami tidak bertanggung jawab atas kehilangan data, gangguan bisnis, atau kerusakan yang diakibatkan oleh penggunaan Aplikasi</li>
+                        <li>Kami tidak menjamin operasi Aplikasi yang tidak terganggu atau bebas kesalahan</li>
+                        <li>Anda mengakui bahwa Aplikasi bergantung pada Layanan Google, dan gangguan pada layanan ini dapat mempengaruhi fungsionalitas Aplikasi</li>
+                    </ul>
+                    
+                    <h3>6. Hak Kekayaan Intelektual</h3>
+                    <p>Aplikasi POSPOP, termasuk kode, desain, dan dokumentasinya, dilindungi oleh hak cipta. Anda boleh:</p>
+                    <ul>
+                        <li>Menggunakan Aplikasi untuk kebutuhan pribadi atau bisnis Anda</li>
+                        <li>Menyesuaikan template Google Sheets untuk kebutuhan spesifik Anda</li>
+                    </ul>
+                    <p>Anda tidak boleh:</p>
+                    <ul>
+                        <li>Mendistribusikan ulang, menjual, atau menyewakan Aplikasi</li>
+                        <li>Membongkar kode atau mencoba mengekstrak kode sumber</li>
+                        <li>Mengklaim Aplikasi sebagai kreasi Anda sendiri</li>
+                    </ul>
+                    
+                    <h3>7. Penangguhan atau Penghentian Akun</h3>
+                    <p>Kami berhak untuk menangguhkan atau menghentikan akses ke Aplikasi jika:</p>
+                    <ul>
+                        <li>Anda melanggar Syarat dan Ketentuan ini</li>
+                        <li>Anda menggunakan Aplikasi untuk kegiatan ilegal</li>
+                        <li>Penggunaan Aplikasi Anda berdampak negatif pada pengguna lain atau layanan itu sendiri</li>
+                    </ul>
+                    
+                    <h3>8. Perubahan pada Syarat</h3>
+                    <p>Kami dapat memperbarui Syarat dan Ketentuan ini dari waktu ke waktu. Penggunaan Aplikasi yang berlanjut setelah perubahan merupakan penerimaan atas syarat-syarat baru.</p>
+                    
+                    <h3>9. Hukum yang Berlaku</h3>
+                    <p>Syarat dan Ketentuan ini diatur oleh dan ditafsirkan sesuai dengan hukum Indonesia, tanpa memperhatikan ketentuan hukum konfliknya.</p>
+                    
+                    <div class="info-box">
+                        <h4>Dukungan dan Kontak</h4>
+                        <p>Untuk dukungan teknis atau pertanyaan tentang Syarat ini:</p>
+                        <p><strong>Email:</strong> pospopindonesia@gmail.com</p>
+                        <p>Kami berusaha merespons pertanyaan dalam waktu 3 hari kerja.</p>
+                    </div>
+                    
+                    <div class="acceptance-section">
+                        <h3>Penerimaan Syarat</h3>
+                        <p>Dengan menggunakan POSPOP, Anda mengakui bahwa Anda telah membaca, memahami, dan setuju untuk terikat dengan Syarat dan Ketentuan ini.</p>
+                        <p><strong>Terakhir Diperbarui: 21 Januari 2026</strong></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2026 POSPOP - Aplikasi POS dan Kasir tanpa berlangganan. Hak cipta dilindungi undang-undang.</p>
+            <p>Dikembangkan dengan Google Apps Script</p>
+            <div class="footer-links">
+                <a href="privacy-policy.html">Kebijakan Privasi</a>
+                <a href="tos.html">Syarat dan Ketentuan</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const englishVersion = document.getElementById('english-version');
+            const indonesianVersion = document.getElementById('indonesian-version');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show selected language version
+                    const lang = this.getAttribute('data-lang');
+                    
+                    if (lang === 'en') {
+                        englishVersion.classList.add('active');
+                        indonesianVersion.classList.remove('active');
+                    } else {
+                        englishVersion.classList.remove('active');
+                        indonesianVersion.classList.add('active');
+                    }
+                });
+            });
+            
+            // Auto-detect language preference
+            const userLang = navigator.language || navigator.userLanguage;
+            if (userLang.startsWith('id')) {
+                // Switch to Indonesian version
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-lang') === 'id') {
+                        btn.classList.add('active');
+                    }
+                });
+                englishVersion.classList.remove('active');
+                indonesianVersion.classList.add('active');
+            }
+            
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>POSPOP VIP - Akses Premium Kasir Online</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            margin: 0; 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .iframe-wrapper { 
+            flex-grow: 1; 
+            width: 100%; 
+            border: none; 
+            display: block; 
+            height: calc(100vh - 70px);
+        }
+        
+        .fade-in { 
+            animation: fadeIn 0.4s ease-in-out; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        .vip-card {
+            background: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-vip {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-vip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .btn-pwa {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-pwa:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(240, 147, 251, 0.2);
+        }
+        
+        .vip-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .vip-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pwa-install-modal {
+            background: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .soft-shadow {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        .soft-border {
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .input-soft {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .input-soft:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: #4a5568;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 640px) {
+            .iframe-wrapper {
+                height: calc(100vh - 60px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- VIP Setup Screen -->
+    <div id="vip-setup-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-6 fade-in" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)">
+        <div class="vip-card p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-md glass-effect soft-shadow">
+            <div class="text-center mb-6 md:mb-8">
+                <div class="flex justify-center mb-4">
+                    <div class="w-24 h-16 md:w-30 md:h-20 p-4 md:p-5 bg-gradient-to-br from-[#667eea] to-[#764ba2] rounded-2xl flex items-center justify-center shadow-lg">
+                        <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP Logo" class="h-8 md:h-12 filter brightness-0 invert">
+                    </div>
+                </div>
+                
+                <div class="inline-flex items-center vip-badge px-4 py-2 rounded-full text-sm soft-shadow">
+                    <i class="fas fa-crown mr-2"></i> AKSES MASUK
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label for="vip-script-url" class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-link mr-2 text-purple-500"></i> Url kamu :
+                </label>
+                <input type="text" id="vip-script-url" 
+                       placeholder="https://script.google.com/macros/s/AKfycbyxxxxxxxxxxxx/dev"
+                       class="w-full p-3 md:p-4 input-soft text-gray-800 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all shadow-sm text-sm">
+                <p class="text-xs text-gray-500 mt-2">
+                    <i class="fas fa-edit mr-1"></i> Masukkan URL Google Apps Script Anda
+                </p>
+                <div class="flex items-center mt-2 space-x-2">
+                    <button onclick="useDefaultScript()" 
+                            class="text-xs btn-secondary px-3 py-1 rounded-lg transition-colors">
+                        <i class="fas fa-history mr-1"></i> Default
+                    </button>
+                    <button onclick="clearScriptUrl()" 
+                            class="text-xs btn-secondary px-3 py-1 rounded-lg transition-colors">
+                        <i class="fas fa-times mr-1"></i> Clear
+                    </button>
+                    <button onclick="showUrlHistory()" 
+                            class="text-xs btn-secondary px-3 py-1 rounded-lg transition-colors">
+                        <i class="fas fa-history mr-1"></i> History
+                    </button>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="loadVipApp()" 
+                        class="w-full btn-vip font-semibold py-3 md:py-4 rounded-xl md:rounded-2xl shadow-lg transition-all transform active:scale-[0.98]">
+                    <i class="fas fa-rocket mr-2"></i> Akses POSPOP VIP
+                </button>
+                
+                <!-- Tombol Install PWA -->
+                <button id="pwa-install-btn" 
+                        class="w-full btn-pwa font-semibold py-3 md:py-4 rounded-xl md:rounded-2xl shadow-lg transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+                    <i class="fas fa-download mr-2"></i> Install Aplikasi (PWA)
+                    <span id="install-badge" class="bg-white/30 px-2 py-1 rounded-full text-xs hidden pulse">
+                        NEW
+                    </span>
+                </button>
+                
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <button onclick="showFeatures()" 
+                            class="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-3 rounded-xl md:rounded-2xl text-center transition-all soft-border">
+                        <i class="fas fa-star mr-2"></i> Fitur VIP
+                    </button>
+                    <button onclick="showPWAInfo()" 
+                            class="w-full bg-purple-50 hover:bg-purple-100 text-purple-600 font-medium py-3 rounded-xl md:rounded-2xl text-center transition-all soft-border">
+                        <i class="fas fa-mobile-alt mr-2"></i> Install Guide
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <p class="text-center text-xs text-gray-500">
+                    <i class="fas fa-shield-alt mr-1"></i> Akses VIP • Prioritas Update • Support Premium
+                </p>
+            </div>
+        </div>
+        
+        <div class="mt-6 md:mt-8 text-center">
+            <p class="text-gray-500 text-xs md:text-sm mb-2">© 2023 POSPOP VIP • All Rights Reserved</p>
+            <p class="text-gray-400 text-xs">VIP Bridge v2.0 • Secure Connection</p>
+        </div>
+    </div>
+
+    <!-- VIP App Header -->
+    <header id="vip-app-header" class="hidden glass-effect shadow-sm px-4 py-3 flex items-center justify-between z-50 border-b border-gray-200">
+        <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2">
+                
+                <div class="hidden md:flex items-center gap-1">
+                    <span class="vip-badge px-2 py-1 rounded-full text-xs">VIP</span>
+                    <span class="text-gray-600 text-sm">• Premium Access</span>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button onclick="showCurrentUrl()" 
+                            class="vip-badge px-2 py-1 rounded-full text-xs flex items-center gap-1">
+                        <i class="fas fa-link text-xs"></i> URL
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-2 md:gap-3">
+            <!-- URL Display for Desktop -->
+            <div class="hidden md:flex items-center bg-white/80 px-3 py-1 rounded-lg max-w-xs soft-border">
+                <div class="truncate text-xs text-gray-600" id="current-url-display">
+                    URL: Tidak aktif
+                </div>
+                <button onclick="changeScriptUrl()" 
+                        class="ml-2 text-purple-500 hover:text-purple-600">
+                    <i class="fas fa-edit text-xs"></i>
+                </button>
+            </div>
+            
+            <div class="hidden sm:flex items-center gap-4 text-sm">
+                <div class="text-right">
+                    <div class="text-gray-500 text-xs">Status</div>
+                    <div class="font-medium vip-text">Premium Active</div>
+                </div>
+                <div class="h-6 w-px bg-gray-300"></div>
+                <div class="text-right">
+                    <div class="text-gray-500 text-xs">Mode</div>
+                    <div class="font-medium text-gray-700">Kasir VIP</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-1 md:gap-2">
+                <!-- Tombol Install PWA di Header -->
+                <button id="header-pwa-btn" 
+                        class="p-2 text-gray-500 hover:text-purple-500 hover:bg-purple-50 rounded-xl transition-colors hidden soft-border"
+                        title="Install Aplikasi">
+                    <i class="fas fa-download text-sm"></i>
+                </button>
+                
+                <button onclick="toggleFullscreen()" 
+                        class="p-2 text-gray-500 hover:text-purple-500 hover:bg-purple-50 rounded-xl transition-colors soft-border"
+                        title="Layar Penuh">
+                    <i class="fas fa-expand text-sm"></i>
+                </button>
+                
+                <button onclick="refreshVipApp()" 
+                        class="p-2 text-gray-500 hover:text-green-500 hover:bg-green-50 rounded-xl transition-colors soft-border"
+                        title="Refresh">
+                    <i class="fas fa-redo text-sm"></i>
+                </button>
+                
+                <button onclick="changeScriptUrl()" 
+                        class="p-2 text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-colors soft-border hidden md:flex"
+                        title="Ganti URL">
+                    <i class="fas fa-exchange-alt text-sm"></i>
+                </button>
+                
+                <button onclick="clearVipCache()" 
+                        class="flex items-center gap-2 bg-white hover:bg-red-50 hover:text-red-600 text-gray-700 px-2 md:px-3 py-2 rounded-xl transition-all text-sm font-medium soft-border shadow-sm"
+                        title="Keluar dari VIP">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="hidden sm:inline">Keluar</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="vip-app-main" class="hidden flex-grow overflow-hidden bg-gray-50">
+        <iframe id="vip-app-iframe" src="" class="iframe-wrapper" title="POSPOP VIP Aplikasi Kasir"></iframe>
+    </main>
+
+    <!-- PWA Install Modal -->
+    <div id="pwa-install-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/40">
+        <div class="pwa-install-modal p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-md glass-effect soft-shadow">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Install Aplikasi POSPOP VIP</h3>
+                <button onclick="hidePWAInstallModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4 mb-6">
+                <div class="flex items-start gap-3">
+                    <div class="bg-purple-100 p-2 rounded-lg">
+                        <i class="fas fa-desktop text-purple-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Desktop (Chrome/Edge)</h4>
+                        <p class="text-sm text-gray-600">Klik ikon <span class="font-bold">"➕ Install"</span> di address bar</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <div class="bg-purple-100 p-2 rounded-lg">
+                        <i class="fab fa-android text-green-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Android (Chrome)</h4>
+                        <p class="text-sm text-gray-600">Menu → <span class="font-bold">"Add to Home screen"</span></p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <div class="bg-purple-100 p-2 rounded-lg">
+                        <i class="fab fa-apple text-gray-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">iOS (Safari)</h4>
+                        <p class="text-sm text-gray-600">Share (⎋) → <span class="font-bold">"Add to Home Screen"</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-xl mb-6">
+                <p class="text-sm text-gray-700">
+                    <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                    Aplikasi PWA dapat digunakan <span class="text-gray-800 font-bold">offline</span> dan terlihat seperti aplikasi native di perangkat Anda.
+                </p>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="hidePWAInstallModal()" 
+                        class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 rounded-xl transition-all">
+                    Nanti Saja
+                </button>
+                <button id="trigger-pwa-install" 
+                        class="flex-1 btn-pwa font-semibold py-3 rounded-xl transition-all">
+                    Install Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Info Modal -->
+    <div id="pwa-info-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/40">
+        <div class="pwa-install-modal p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-md glass-effect soft-shadow">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Panduan Install PWA</h3>
+                <button onclick="hidePWAInfo()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="font-bold text-gray-800 mb-3">Keuntungan Install sebagai PWA:</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>Dapat diakses seperti aplikasi native</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>Bekerja sebagian offline</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>Notifikasi push</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>Tanpa perlu download dari app store</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>Update otomatis</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-xl mb-6">
+                <h4 class="font-bold text-gray-800 mb-2">Tips Cepat:</h4>
+                <p class="text-sm text-gray-600">
+                    Jika tombol install tidak muncul, refresh halaman dan pastikan Anda menggunakan browser modern (Chrome, Edge, Safari).
+                </p>
+            </div>
+            
+            <button onclick="hidePWAInfo()" 
+                    class="w-full btn-pwa font-semibold py-3 rounded-xl">
+                Mengerti
+            </button>
+        </div>
+    </div>
+
+    <!-- VIP Features Modal -->
+    <div id="vip-features-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/40">
+        <div class="vip-card p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-md max-h-[80vh] overflow-y-auto glass-effect soft-shadow">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold vip-text">Fitur POSPOP VIP</h3>
+                <button onclick="hideFeatures()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                    <div class="vip-badge p-2 rounded-lg">
+                        <i class="fas fa-bolt text-xs"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Akses Prioritas</h4>
+                        <p class="text-sm text-gray-600">Server premium dengan kecepatan maksimal</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <div class="vip-badge p-2 rounded-lg">
+                        <i class="fas fa-shield-alt text-xs"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Keamanan Tingkat Tinggi</h4>
+                        <p class="text-sm text-gray-600">Enkripsi data dan backup otomatis</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <div class="vip-badge p-2 rounded-lg">
+                        <i class="fas fa-headset text-xs"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Support 24/7</h4>
+                        <p class="text-sm text-gray-600">Tim support khusus member VIP</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <div class="vip-badge p-2 rounded-lg">
+                        <i class="fas fa-sync text-xs"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Update Otomatis</h4>
+                        <p class="text-sm text-gray-600">Fitur baru langsung tersedia</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="hideFeatures()" 
+                    class="w-full mt-6 btn-vip font-semibold py-3 rounded-xl">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- Change URL Modal -->
+    <div id="change-url-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/40">
+        <div class="vip-card p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-md glass-effect soft-shadow">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Ganti URL Google Apps Script</h3>
+                <button onclick="hideChangeUrlModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-6">
+                <label for="new-script-url" class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-link mr-2 text-purple-500"></i> URL Baru Google Apps Script
+                </label>
+                <input type="text" id="new-script-url" 
+                       placeholder="https://script.google.com/macros/s/AKfycbwmqbEJQGI-H87n4nTSBklJAx36_Dpw6ZdTi_ViZdcQx6K5CEM5sMAwOcNHxBF4MtCj/exec"
+                       class="w-full p-3 md:p-4 input-soft text-gray-800 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all shadow-sm text-sm">
+                <p class="text-xs text-gray-500 mt-2">
+                    <i class="fas fa-info-circle mr-1"></i> Pastikan URL adalah Google Apps Script yang valid
+                </p>
+                
+                <div class="mt-4">
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm">URL History:</h4>
+                    <div id="url-history-list" class="space-y-1 max-h-32 overflow-y-auto">
+                        <!-- URL history will be populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="hideChangeUrlModal()" 
+                        class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 rounded-xl transition-all">
+                    Batal
+                </button>
+                <button onclick="applyNewScriptUrl()" 
+                        class="flex-1 btn-vip font-semibold py-3 rounded-xl transition-all">
+                    Terapkan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Semua kode JavaScript tetap sama persis seperti sebelumnya
+        // DOM Elements
+        const vipSetupScreen = document.getElementById('vip-setup-screen');
+        const vipAppHeader = document.getElementById('vip-app-header');
+        const vipAppMain = document.getElementById('vip-app-main');
+        const vipAppIframe = document.getElementById('vip-app-iframe');
+        const pwaInstallBtn = document.getElementById('pwa-install-btn');
+        const headerPwaBtn = document.getElementById('header-pwa-btn');
+        const installBadge = document.getElementById('install-badge');
+        const pwaInstallModal = document.getElementById('pwa-install-modal');
+        const pwaInfoModal = document.getElementById('pwa-info-modal');
+        const triggerPwaInstall = document.getElementById('trigger-pwa-install');
+        const vipFeaturesModal = document.getElementById('vip-features-modal');
+        const vipScriptUrlInput = document.getElementById('vip-script-url');
+        const changeUrlModal = document.getElementById('change-url-modal');
+        const newScriptUrlInput = document.getElementById('new-script-url');
+        const urlHistoryList = document.getElementById('url-history-list');
+        const currentUrlDisplay = document.getElementById('current-url-display');
+
+        // Default VIP Apps Script URL
+        const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmqbEJQGI-H87n4nTSBklJAx36_Dpw6ZdTi_ViZdcQx6K5CEM5sMAwOcNHxBF4MtCj/exec";
+        
+        // Key untuk localStorage
+        const STORAGE_KEY = 'pospop_vip_urls';
+        const CURRENT_URL_KEY = 'pospop_current_url';
+
+        // Variables for PWA
+        let deferredPrompt = null;
+        let isPWAInstalled = false;
+
+        // Initialize app on load
+        window.onload = () => {
+            // Load saved URL or use default
+            const savedCurrentUrl = localStorage.getItem(CURRENT_URL_KEY);
+            if (savedCurrentUrl) {
+                vipScriptUrlInput.value = savedCurrentUrl;
+            } else {
+                vipScriptUrlInput.value = DEFAULT_SCRIPT_URL;
+            }
+            
+            // Check PWA status
+            checkPWAStatus();
+            
+            // Check if already loaded VIP app
+            const savedVipUrl = localStorage.getItem('vip_apps_script_url');
+            if (savedVipUrl && savedVipUrl !== DEFAULT_SCRIPT_URL) {
+                showVipApp(savedVipUrl);
+            } else {
+                vipSetupScreen.classList.remove('hidden');
+                vipScriptUrlInput.focus();
+            }
+            
+            // Setup event listeners
+            setupPWAListeners();
+            
+            // Check if PWA should be promoted
+            setTimeout(checkForPWAInstallPrompt, 2000);
+            
+            // Load URL history
+            loadUrlHistory();
+        };
+
+        // Load URL history from localStorage
+        function loadUrlHistory() {
+            const history = getUrlHistory();
+            updateUrlHistoryDisplay(history);
+        }
+
+        // Get URL history from localStorage
+        function getUrlHistory() {
+            const historyJson = localStorage.getItem(STORAGE_KEY);
+            if (historyJson) {
+                try {
+                    return JSON.parse(historyJson);
+                } catch (e) {
+                    console.error('Error parsing URL history:', e);
+                    return [];
+                }
+            }
+            return [];
+        }
+
+        // Save URL to history
+        function saveUrlToHistory(url) {
+            if (!url || !isValidVipScriptUrl(url)) return;
+            
+            let history = getUrlHistory();
+            
+            // Remove if already exists
+            history = history.filter(item => item.url !== url);
+            
+            // Add to beginning
+            history.unshift({
+                url: url,
+                timestamp: new Date().toISOString(),
+                name: `Script ${history.length + 1}`
+            });
+            
+            // Keep only last 10 URLs
+            history = history.slice(0, 10);
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+            updateUrlHistoryDisplay(history);
+        }
+
+        // Update URL history display
+        function updateUrlHistoryDisplay(history) {
+            if (!urlHistoryList) return;
+            
+            if (history.length === 0) {
+                urlHistoryList.innerHTML = `
+                    <div class="text-gray-400 text-sm italic p-2 text-center">
+                        Tidak ada history URL
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            history.forEach((item, index) => {
+                const shortUrl = item.url.substring(0, 50) + (item.url.length > 50 ? '...' : '');
+                html += `
+                    <div class="flex items-center justify-between p-2 hover:bg-gray-100 rounded-lg cursor-pointer group" onclick="useHistoryUrl('${item.url}')">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-xs text-gray-800 truncate">${shortUrl}</div>
+                            <div class="text-xs text-gray-500">${formatDate(item.timestamp)}</div>
+                        </div>
+                        <button onclick="deleteHistoryUrl('${item.url}', event)" 
+                                class="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-600 ml-2">
+                            <i class="fas fa-trash text-xs"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            urlHistoryList.innerHTML = html;
+        }
+
+        // Format date for display
+        function formatDate(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Use a URL from history
+        function useHistoryUrl(url) {
+            newScriptUrlInput.value = url;
+        }
+
+        // Delete a URL from history
+        function deleteHistoryUrl(url, event) {
+            event.stopPropagation();
+            
+            if (confirm('Hapus URL dari history?')) {
+                let history = getUrlHistory();
+                history = history.filter(item => item.url !== url);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+                updateUrlHistoryDisplay(history);
+                showVipNotification('URL dihapus dari history', 'info');
+            }
+        }
+
+        // Use default script URL
+        function useDefaultScript() {
+            vipScriptUrlInput.value = DEFAULT_SCRIPT_URL;
+            showVipNotification('URL default dipulihkan', 'info');
+        }
+
+        // Clear script URL input
+        function clearScriptUrl() {
+            vipScriptUrlInput.value = '';
+            vipScriptUrlInput.focus();
+            showVipNotification('URL dikosongkan', 'info');
+        }
+
+        // Show URL history
+        function showUrlHistory() {
+            showChangeUrlModal();
+        }
+
+        // Show current URL
+        function showCurrentUrl() {
+            const currentUrl = vipAppIframe.src;
+            if (currentUrl) {
+                alert(`URL saat ini:\n\n${currentUrl}`);
+            } else {
+                alert('Tidak ada URL yang aktif');
+            }
+        }
+
+        // Change script URL
+        function changeScriptUrl() {
+            newScriptUrlInput.value = vipAppIframe.src || vipScriptUrlInput.value || DEFAULT_SCRIPT_URL;
+            loadUrlHistory();
+            showChangeUrlModal();
+        }
+
+        // Show change URL modal
+        function showChangeUrlModal() {
+            changeUrlModal.classList.remove('hidden');
+            newScriptUrlInput.focus();
+        }
+
+        // Hide change URL modal
+        function hideChangeUrlModal() {
+            changeUrlModal.classList.add('hidden');
+        }
+
+        // Apply new script URL
+        function applyNewScriptUrl() {
+            const newUrl = newScriptUrlInput.value.trim();
+            if (!newUrl) {
+                showVipNotification('URL tidak boleh kosong', 'error');
+                return;
+            }
+            
+            if (!isValidVipScriptUrl(newUrl)) {
+                showVipNotification('URL Google Apps Script tidak valid', 'error');
+                return;
+            }
+            
+            // Save to history
+            saveUrlToHistory(newUrl);
+            
+            // Update current URL
+            localStorage.setItem(CURRENT_URL_KEY, newUrl);
+            
+            // Reload app with new URL
+            vipScriptUrlInput.value = newUrl;
+            hideChangeUrlModal();
+            
+            if (vipAppMain.classList.contains('hidden')) {
+                // Still on setup screen
+                showVipNotification('URL berhasil diubah', 'success');
+                vipScriptUrlInput.focus();
+            } else {
+                // Already in app, reload with new URL
+                loadVipApp();
+                showVipNotification('Aplikasi direload dengan URL baru', 'success');
+            }
+        }
+
+        // Setup PWA Event Listeners
+        function setupPWAListeners() {
+            // Listen for beforeinstallprompt event
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                showPWAInstallButton();
+                
+                // Show badge after a delay
+                setTimeout(() => {
+                    installBadge.classList.remove('hidden');
+                }, 1000);
+            });
+
+            // Listen for app installed event
+            window.addEventListener('appinstalled', (e) => {
+                console.log('PWA installed successfully');
+                isPWAInstalled = true;
+                deferredPrompt = null;
+                hidePWAInstallButton();
+                showVipNotification('🎉 Aplikasi berhasil diinstall!', 'success');
+                
+                // Optional: Track installation
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'pwa_installed');
+                }
+            });
+        }
+
+        // Check PWA Status
+        function checkPWAStatus() {
+            // Check if running as PWA
+            if (window.matchMedia('(display-mode: standalone)').matches || 
+                window.navigator.standalone === true) {
+                isPWAInstalled = true;
+                hidePWAInstallButton();
+            }
+            
+            // Check if already prompted recently
+            const lastPrompt = localStorage.getItem('pwa_last_prompt');
+            if (lastPrompt) {
+                const daysSince = (Date.now() - parseInt(lastPrompt)) / (1000 * 60 * 60 * 24);
+                if (daysSince < 7) { // Don't prompt more than once a week
+                    hidePWAInstallButton();
+                }
+            }
+        }
+
+        // Check for PWA Install Prompt
+        function checkForPWAInstallPrompt() {
+            // Show install button if not installed and deferredPrompt exists
+            if (!isPWAInstalled && deferredPrompt) {
+                showPWAInstallButton();
+            }
+        }
+
+        // Show PWA Install Button
+        function showPWAInstallButton() {
+            pwaInstallBtn.classList.remove('hidden');
+            headerPwaBtn.classList.remove('hidden');
+        }
+
+        // Hide PWA Install Button
+        function hidePWAInstallButton() {
+            pwaInstallBtn.classList.add('hidden');
+            headerPwaBtn.classList.add('hidden');
+            installBadge.classList.add('hidden');
+        }
+
+        // Trigger PWA Installation
+        function triggerPWAInstallation() {
+            if (deferredPrompt) {
+                // Show the install prompt
+                deferredPrompt.prompt();
+                
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        isPWAInstalled = true;
+                        hidePWAInstallButton();
+                        showVipNotification('Aplikasi berhasil diinstall!', 'success');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                        showVipNotification('Installasi ditunda', 'info');
+                        
+                        // Store dismissal time
+                        localStorage.setItem('pwa_last_prompt', Date.now().toString());
+                    }
+                    
+                    // Clear the deferredPrompt variable
+                    deferredPrompt = null;
+                });
+            } else {
+                // If no deferredPrompt, show guide modal
+                showPWAInstallModal();
+            }
+        }
+
+        // Show PWA Install Modal
+        function showPWAInstallModal() {
+            pwaInstallModal.classList.remove('hidden');
+        }
+
+        // Hide PWA Install Modal
+        function hidePWAInstallModal() {
+            pwaInstallModal.classList.add('hidden');
+        }
+
+        // Show PWA Info Modal
+        function showPWAInfo() {
+            pwaInfoModal.classList.remove('hidden');
+        }
+
+        // Hide PWA Info Modal
+        function hidePWAInfo() {
+            pwaInfoModal.classList.add('hidden');
+        }
+
+        // Load VIP app
+        function loadVipApp() {
+            const urlInput = vipScriptUrlInput.value.trim();
+            if (!urlInput) {
+                showVipNotification('Masukkan URL Google Apps Script', 'error');
+                return;
+            }
+            
+            if (isValidVipScriptUrl(urlInput)) {
+                // Save current URL
+                localStorage.setItem(CURRENT_URL_KEY, urlInput);
+                localStorage.setItem('vip_apps_script_url', urlInput);
+                
+                // Save to history
+                saveUrlToHistory(urlInput);
+                
+                showVipApp(urlInput);
+                showVipNotification('Akses VIP berhasil!', 'success');
+            } else {
+                showVipNotification('URL Google Apps Script tidak valid!', 'error');
+            }
+        }
+
+        // Validate VIP Google Apps Script URL
+        function isValidVipScriptUrl(url) {
+            return url.includes('script.google.com') && url.includes('/macros/s/');
+        }
+
+        // Show main VIP app interface
+        function showVipApp(url) {
+            vipSetupScreen.classList.add('hidden');
+            vipAppHeader.classList.remove('hidden');
+            vipAppMain.classList.remove('hidden');
+            vipAppIframe.src = url;
+            
+            // Update URL display
+            updateCurrentUrlDisplay(url);
+            
+            // Show PWA install button in header if available
+            if (!isPWAInstalled && deferredPrompt) {
+                headerPwaBtn.classList.remove('hidden');
+            }
+        }
+
+        // Update current URL display
+        function updateCurrentUrlDisplay(url) {
+            if (!currentUrlDisplay) return;
+            
+            const shortUrl = url.replace('https://', '').substring(0, 30) + (url.length > 30 ? '...' : '');
+            currentUrlDisplay.textContent = `URL: ${shortUrl}`;
+            currentUrlDisplay.title = url;
+        }
+
+        // Clear VIP cache and logout
+        function clearVipCache() {
+            if (confirm('Apakah Anda yakin ingin keluar dari akses VIP?\nAnda perlu login kembali untuk mengakses.')) {
+                localStorage.removeItem('vip_apps_script_url');
+                localStorage.removeItem(CURRENT_URL_KEY);
+                location.reload();
+            }
+        }
+
+        // Refresh VIP iframe content
+        function refreshVipApp() {
+            if (vipAppIframe.src) {
+                vipAppIframe.src = vipAppIframe.src;
+                showVipNotification('Aplikasi VIP direfresh', 'success');
+            }
+        }
+
+        // Toggle fullscreen mode
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Fullscreen error: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Show VIP features modal
+        function showFeatures() {
+            vipFeaturesModal.classList.remove('hidden');
+        }
+
+        // Hide VIP features modal
+        function hideFeatures() {
+            vipFeaturesModal.classList.add('hidden');
+        }
+
+        // Show support information
+        function showSupport() {
+            alert('Support VIP POSPOP:\n\n📧 Email: support@pospop.vip\n📱 WhatsApp: +62 812-3456-7890\n⏰ 24/7 Support Available');
+        }
+
+        // VIP Notification system
+        function showVipNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-[1000] px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
+                type === 'error' ? 'bg-red-100 text-red-800 border border-red-200' :
+                type === 'success' ? 'bg-green-100 text-green-800 border border-green-200' :
+                'bg-blue-100 text-blue-800 border border-blue-200'
+            }`;
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                    <span class="text-sm font-bold">${message}</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Register service worker
+                navigator.serviceWorker.register('/sw-vip.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }).catch(err => {
+                    console.error('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // Event Listeners for PWA buttons
+        pwaInstallBtn.addEventListener('click', triggerPWAInstallation);
+        headerPwaBtn.addEventListener('click', triggerPWAInstallation);
+        triggerPwaInstall.addEventListener('click', triggerPWAInstallation);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + R to refresh
+            if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                e.preventDefault();
+                refreshVipApp();
+            }
+            // Ctrl/Cmd + U to change URL
+            if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+                e.preventDefault();
+                changeScriptUrl();
+            }
+            // Escape to exit fullscreen or modals
+            if (e.key === 'Escape') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                }
+                hidePWAInstallModal();
+                hidePWAInfo();
+                hideFeatures();
+                hideChangeUrlModal();
+            }
+            // F1 to show features
+            if (e.key === 'F1') {
+                e.preventDefault();
+                showFeatures();
+            }
+            // F2 to trigger PWA install
+            if (e.key === 'F2') {
+                e.preventDefault();
+                triggerPWAInstallation();
+            }
+            // F3 to show URL history
+            if (e.key === 'F3') {
+                e.preventDefault();
+                showUrlHistory();
+            }
+        });
+
+        // Check if app is running in standalone mode (PWA)
+        window.addEventListener('load', () => {
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('Running as PWA');
+                // Optional: Add PWA specific behaviors
+            }
+        });
+
+        // Auto-login if URL is already the VIP one
+        if (window.location.hash === '#autologin') {
+            loadVipApp();
+        }
+    </script>
+</body>
+</html>

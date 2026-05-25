@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POSPOP – Panduan Setup Lengkap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #f8fafc; color: #334155; line-height: 1.6; }
+        
+        .hero {
+            background: url('https://pospop.digitalove.id/images/bgbgbg.webp') no-repeat center center;
+            background-size: cover;
+            border-radius: 0 0 1rem 1rem;
+            position: relative;
+        }
+
+        .accordion {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .accordion:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1.5rem;
+        }
+
+        .content-inner { padding-bottom: 1.5rem; }
+
+        .step-list { list-style: none; }
+        .step-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+        .step-list li::before {
+            content: "\f054"; 
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #6366f1;
+            font-size: 0.8rem;
+            top: 0.2rem;
+        }
+
+        .warning-box {
+            background: #fff1f2;
+            border-left: 4px solid #f43f5e;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #9f1239;
+        }
+
+        .fade-in { opacity: 0; transform: translateY(10px); transition: 0.5s ease-out forwards; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Style untuk tombol back agar terlihat melayang halus */
+        .btn-back {
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-back:hover {
+            transform: translateX(-3px);
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="https://pospop.digitalove.id/" class="btn-back text-slate-500 font-medium text-sm border-r border-slate-200 pr-4">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <div class="flex items-center gap-2">
+                    <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="Logo" class="h-8">
+                    <span class="font-bold text-slate-800 tracking-tight hidden sm:inline">POSPOP</span>
+                </div>
+            </div>
+            <a href="https://wa.me/6287788082244" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">Butuh Bantuan?</a>
+        </div>
+    </header>
+
+    <section class="hero text-white py-16 px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+            <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">Official Guide</span>
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Setup Kasir POSPOP Anda</h1>
+            <p class="text-indigo-100 text-lg mb-8">Ikuti 5 langkah sederhana untuk mengaktifkan sistem kasir berbasis Google Drive Anda.</p>
+            
+            <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-slate-900 mb-8">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/2RmArbE5kgI" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <a href="https://drive.google.com/drive/folders/1A4DZ76taXGZHzdNpEJmgEeAgyLxd2L82?usp=drive_link" class="inline-flex items-center gap-2 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold hover:bg-indigo-50 transition shadow-lg">
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </a>
+        </div>
+    </section>
+
+    <main class="max-w-3xl mx-auto px-6 py-12">
+        
+        <div class="accordion fade-in">
+            <div class="accordion-header">
+                <span class="flex items-center gap-3">
+                    <span class="w-7 h-7 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">1</span>
+                    Persiapan File
+                </span>
+                <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+            </div>
+            <div class="accordion-body">
+                <div class="content-inner">
+                    <div class="warning-box">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <strong>Penting:</strong> Jangan download/upload ulang. File akan gagal jika tidak berjalan di ekosistem Google Drive.
+                    </div>
+                    <ul class="step-list text-slate-600">
+                        <li>Buka link Google Drive yang Anda terima.</li>
+                        <li>Klik kanan <strong>app.pospop</strong> dan <strong>database</strong>, lalu pilih <strong>Buat Salinan</strong>.</li>
+                        <li>Pastikan salinan ada di <strong>Drive Saya</strong>.</li>
+                        <li>Rapikan kedua file tersebut ke dalam satu folder baru.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion fade-in">
+            <div class="accordion-header">
+                <span class="flex items-center gap-3">
+                    <span class="w-7 h-7 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">2</span>
+                    Deploy Aplikasi
+                </span>
+                <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+            </div>
+            <div class="accordion-body">
+                <div class="content-inner">
+                    <ul class="step-list text-slate-600">
+                        <li>Buka file <strong>app.pospop</strong> (Anda akan diarahkan ke Google Apps Script).</li>
+                        <li>Klik <strong>Deploy</strong> > <strong>Deployment Baru</strong>.</li>
+                        <li>Pilih Jenis: <strong>Aplikasi Web</strong>.</li>
+                        <li>Setel "Jalankan sebagai": <strong>Siapa saja yang memiliki akun Google</strong>.</li>
+                        <li>Klik Deploy dan <strong>Salin URL Aplikasi Web</strong> yang muncul.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion fade-in">
+            <div class="accordion-header">
+                <span class="flex items-center gap-3">
+                    <span class="w-7 h-7 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">3</span>
+                    Setup Database
+                </span>
+                <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+            </div>
+            <div class="accordion-body">
+                <div class="content-inner text-slate-600">
+                    <ul class="step-list">
+                        <li>Buka URL Aplikasi yang baru Anda salin.</li>
+                        <li>Izinkan akses keamanan Google (Pilih email > Lanjutkan ke app.pospop).</li>
+                        <li>Salin URL file <strong>database (Spreadsheet)</strong> Anda.</li>
+                        <li>Tempelkan ke kolom <strong>Link Google Spreadsheet</strong> di aplikasi.</li>
+                        <li>Klik <strong>Hubungkan Spreadsheet</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion fade-in">
+            <div class="accordion-header">
+                <span class="flex items-center gap-3">
+                    <span class="w-7 h-7 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">4</span>
+                    Login Pertama
+                </span>
+                <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+            </div>
+            <div class="accordion-body">
+                <div class="content-inner text-slate-600">
+                    <ul class="step-list">
+                        <li>Isi Nama Toko, User Admin, dan Password (perhatikan huruf besar/kecil).</li>
+                        <li>Klik <strong>Inisialisasi Sistem</strong>.</li>
+                        <li>Klik <strong>Masuk Dashboard</strong> untuk memulai.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion fade-in">
+            <div class="accordion-header">
+                <span class="flex items-center gap-3">
+                    <span class="w-7 h-7 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">5</span>
+                    Aktivasi
+                </span>
+                <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+            </div>
+            <div class="accordion-body">
+                <div class="content-inner text-slate-600">
+                    <ul class="step-list">
+                        <li>Buka menu <strong>Pengaturan</strong> di dalam aplikasi.</li>
+                        <li>Klik <strong>Aktivasi Sekarang</strong>.</li>
+                        <li>Admin akan memproses aktivasi Anda (maksimal 24 jam).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-12 text-slate-400 text-sm">
+        <p>&copy; 2026 POSPOP. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const body = button.nextElementSibling;
+                const icon = button.querySelector('.fa-chevron-down');
+                
+                document.querySelectorAll('.accordion-body').forEach(el => {
+                    if (el !== body) {
+                        el.style.maxHeight = null;
+                        el.previousElementSibling.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                if (body.style.maxHeight) {
+                    body.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    body.style.maxHeight = body.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        
+        window.onload = () => document.querySelector('.accordion-header').click();
+    </script>
+</body>
+</html>

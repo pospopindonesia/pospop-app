@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POSPOP - Aplikasi Kasir Modern - Promo 76rb</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        #beranda{
+            background-image: url('https://pospop.digitalove.id/images/bgbg.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        #beranda::before{
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(255,255,255,0.95),
+                rgba(255,255,255,0.85),
+                rgba(255,255,255,0.6)
+            );
+            z-index: 0;
+        }
+
+        #beranda > div{
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        /* Slideshow Styles - MOBILE FIXED */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: #f8f9fa;
+            /* Dynamic height for mobile */
+            height: 0;
+            padding-bottom: 75%; /* 4:3 aspect ratio for mobile */
+        }
+        @media (min-width: 768px) {
+            .slideshow-container {
+                height: 350px;
+                padding-bottom: 0;
+            }
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            object-fit: contain;
+            background: white;
+            padding: 10px;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .slideshow-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 20;
+        }
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .nav-dot.active {
+            background-color: white;
+            transform: scale(1.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .nav-dot:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            transform: scale(1.2);
+        }
+        .slideshow-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            opacity: 1;
+        }
+        @media (min-width: 768px) {
+            .slideshow-arrow {
+                width: 44px;
+                height: 44px;
+            }
+        }
+        .slideshow-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .arrow-left {
+            left: 10px;
+        }
+        .arrow-right {
+            right: 10px;
+        }
+        @media (min-width: 768px) {
+            .arrow-left {
+                left: 15px;
+            }
+            .arrow-right {
+                right: 15px;
+            }
+        }
+        .slideshow-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 20;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        @media (min-width: 768px) {
+            .slideshow-badge {
+                top: 15px;
+                right: 15px;
+                padding: 6px 16px;
+                font-size: 0.8rem;
+            }
+        }
+        .slideshow-counter {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            z-index: 20;
+        }
+        @media (min-width: 768px) {
+            .slideshow-counter {
+                top: 15px;
+                left: 15px;
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+        }
+        .slideshow-caption {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 6px 12px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 15;
+            opacity: 1;
+        }
+        @media (min-width: 768px) {
+            .slideshow-caption {
+                bottom: 50px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        /* Fallback for missing images - MOBILE OPTIMIZED */
+        .slide.error {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+        }
+        .slide.error::after {
+            content: attr(data-alt);
+        }
+        /* Mobile layout adjustments */
+        @media (max-width: 640px) {
+            #beranda .flex-col.lg\:flex-row {
+                gap: 2rem;
+            }
+            .slideshow-container {
+                margin-top: 1rem;
+            }
+        }
+        /* Ensure images load properly */
+        .slide {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Tabel Komparasi Minimalis Styles */
+        .comparison-container {
+            -webkit-overflow-scrolling: touch;
+            overflow-x: auto;
+        }
+        
+        .comparison-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .comparison-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 2px;
+        }
+        
+        .comparison-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+
+        /* Promo Badge Animation */
+        .promo-badge {
+            animation: pulse 2s infinite;
+            border: 2px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Price Animation */
+        .price-flash {
+            animation: flash 3s infinite;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* CTA Button Animation */
+        .cta-button {
+            animation: cta-pulse 2s infinite;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        @keyframes cta-pulse {
+            0% { box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3); }
+            50% { box-shadow: 0 10px 30px rgba(37, 99, 235, 0.5); }
+            100% { box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white border-b shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP" class="h-8">
+                    <span class="ml-2 text-lg font-bold text-gray-800 hidden sm:block">POSPOP</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#beranda" class="text-gray-600 hover:text-purple-600 font-medium">Beranda</a>
+                    <a href="#video" class="text-gray-600 hover:text-purple-600 font-medium">Demo Video</a>
+                    <a href="#fitur" class="text-gray-600 hover:text-purple-600 font-medium">Fitur</a>
+                    <a href="#fitur-kami" class="text-gray-600 hover:text-purple-600 font-medium">Fitur Kami</a>
+                    <a href="#harga" class="text-gray-600 hover:text-purple-600 font-medium">Harga</a>
+                    <a href="#komparasi" class="text-gray-600 hover:text-purple-600 font-medium">Perbandingan</a>
+                    <a href="https://pospop.digitalove.id/privacy-policy.html" class="text-gray-600 hover:text-purple-600 font-medium">Kebijakan Privasi</a>
+                    <a href="https://pospop.digitalove.id/tos.html" class="text-gray-600 hover:text-purple-600 font-medium">Terms of Service</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <a href="/app.html" class="text-gray-600 hover:text-purple-600 hidden md:inline font-medium">Download App</a>
+                    <a href="https://wa.me/6287788082244?text=halo+kak+saya+mau+order+sistem+pos+kasir+digital+dengan+promo+76rb" 
+                       target="_blank" 
+                       class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition text-sm md:text-base md:px-5 md:py-2 font-medium shadow-md">
+                        <i class="fab fa-whatsapp mr-2"></i>Order via WA
+                    </a>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#beranda" class="text-gray-600 hover:text-purple-600 py-2 font-medium">Beranda</a>
+                    <a href="#video" class="text-gray-600 hover:text-purple-600 py-2 font-medium">Demo Video</a>
+                    <a href="#fitur" class="text-gray-600 hover:text-purple-600 py-2 font-medium">Fitur</a>
+                    <a href="#fitur-kami" class="text-gray-600 hover:text-purple-600 py-2 font-medium">Fitur Kami</a>
+                    <a href="#harga" class="text-gray-600 hover:text-purple-600 py-2 font-medium">Harga</a>
+                    <a href="#komparasi" class="text-gray-600 hover:text-purple-600 py-2 font-medium">Perbandingan</a>
+                    <a href="/app.html" class="text-gray-600 hover:text-purple-600 py-2 font-medium">Login</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="beranda" class="py-12 md:py-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col lg:flex-row items-center gap-8 md:gap-12">
+                    <div class="lg:w-1/2 w-full">
+                        <div class="inline-flex items-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-1 rounded-full mb-4 md:mb-6 text-sm font-medium promo-badge">
+                            <i class="fas fa-bolt mr-1"></i> PROMO SPESIAL 76RB
+                        </div>
+                        <div class="inline-flex items-center bg-red-50 text-red-600 px-3 py-1 rounded-full mb-4 md:mb-2 text-xs font-medium ml-2 border border-red-200">
+                            <i class="fas fa-exclamation-circle mr-1"></i> HANYA 10 STOCK TERAKHIR!
+                        </div>
+                        
+                        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 md:mb-6">Aplikasi Kasir Hanya <span class="text-red-600">Rp 76.000</span> Seumur Hidup!</h1>
+                        <p class="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
+                            Solusi kasir modern untuk semua jenis usaha. Cukup sekali beli, gunakan selamanya.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 md:mb-10">
+                            <a href="https://wa.me/6287788082244?text=halo+kak+saya+mau+order+sistem+pos+kasir+digital+dengan+promo+76rb" 
+                               target="_blank" 
+                               class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-bold hover:from-green-600 hover:to-green-700 transition text-center text-sm md:text-base cta-button">
+                                <i class="fab fa-whatsapp mr-2"></i> ORDER SEKARANG
+                            </a>
+                            <a href="#video" class="border border-gray-300 text-gray-700 px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-gray-50 transition text-center text-sm md:text-base">
+                                <i class="fas fa-play-circle mr-2"></i> Tonton Demo
+                            </a>
+                        </div>
+                        <div class="mb-6 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <div class="flex items-center gap-3 md:gap-4 mb-2">
+                                <span class="text-gray-400 line-through text-lg md:text-xl">Rp 229.000</span>
+                                <span class="text-2xl md:text-3xl font-bold text-red-600 price-flash">Rp 76.000,-</span>
+                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">DISKON 67%</span>
+                            </div>
+                            <p class="text-gray-500 text-sm md:text-base"><i class="fas fa-check text-green-500 mr-1"></i> Sekali bayar • Akses seumur hidup • Tanpa biaya berlangganan</p>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400 mr-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm md:text-base">4.9/5 dari 1.000+ ulasan</span>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full mt-8 md:mt-0">
+                            
+    <img 
+        src="https://pospop.digitalove.id/images/hero.webp"
+        alt="POSPOP - Aplikasi Kasir Modern"
+        class="w-full h-auto rounded-lg object-contain"
+        loading="lazy"
+    >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Lihat Video Demo POSPOP</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Tonton video demo untuk melihat langsung fitur-fitur unggulan dan kemudahan penggunaan POSPOP</p>
+                </div>
+                
+                <div class="mb-6 md:mb-8">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/hpmOH4Bo3lE" 
+                            title="Demo Lengkap POSPOP - Aplikasi Kasir Modern"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
+                    <div class="text-center p-4 md:p-6 bg-gray-50 rounded-lg">
+                        <div class="text-purple-600 text-xl md:text-2xl mb-3">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2 text-sm md:text-base">Demo Lengkap</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Lihat semua fitur utama dalam satu video</p>
+                    </div>
+                    
+                    <div class="text-center p-4 md:p-6 bg-gray-50 rounded-lg">
+                        <div class="text-purple-600 text-xl md:text-2xl mb-3">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2 text-sm md:text-base">Setup Mudah</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Tutorial setup dalam 15 menit</p>
+                    </div>
+                    
+                    <div class="text-center p-4 md:p-6 bg-gray-50 rounded-lg">
+                        <div class="text-purple-600 text-xl md:text-2xl mb-3">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2 text-sm md:text-base">Punya Pertanyaan?</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Hubungi tim support kami via WhatsApp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="fitur" class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 md:mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Mengapa POSPOP?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Fitur lengkap untuk mengelola bisnis Anda dengan mudah</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm">
+                    <div class="text-purple-600 text-xl md:text-2xl mb-4">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Database Milik Anda</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Semua data tersimpan aman di Google Drive pribadi. Sepenuhnya milik Anda.</p>
+                </div>
+                
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm">
+                    <div class="text-purple-600 text-xl md:text-2xl mb-4">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Akses Multi-Device</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Bisa digunakan di HP, tablet, dan laptop. Online dari mana saja.</p>
+                </div>
+                
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm">
+                    <div class="text-purple-600 text-xl md:text-2xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Laporan Lengkap</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Dashboard statistik real-time dan laporan keuangan detail.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Fitur Kami Ditambahkan di sini -->
+    <section id="fitur-kami" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Fitur Kami</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Fitur lengkap untuk mendukung operasional bisnis Anda</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Fitur 1 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">POS Kasir Sistem</h3>
+                    <p class="text-gray-600 text-sm md:text-base">
+                        Lengkap untuk kebutuhan transaksi harian: pencarian item cepat, diskon, nama pelanggan, metode pembayaran, pajak, hingga perhitungan kembalian otomatis. Print Struk Pembelian Lengkap.
+                    </p>
+                </div>
+                
+                <!-- Fitur 2 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Dashboard Statistik</h3>
+                    <p class="text-gray-600 text-sm md:text-base">
+                        Pantau performa bisnis lewat grafik omzet, produk terlaris, dan ranking item secara real-time.
+                    </p>
+                </div>
+                
+                <!-- Fitur 3 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Produk & Stok</h3>
+                    <p class="text-gray-600 text-sm md:text-base">
+                        Kelola produk tanpa batas. Update stok, tambahkan gambar produk, atur satuan/unit dengan mudah.
+                    </p>
+                </div>
+                
+                <!-- Fitur 4 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Pelanggan</h3>
+                    <p class="text-gray-600 text-sm md:text-base">
+                        Data pelanggan unlimited. Bisa update data dan kirim WhatsApp otomatis: promo, tagihan, ucapan terima kasih, hingga pesan custom.
+                    </p>
+                </div>
+                
+                <!-- Fitur 5 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Riwayat Order</h3>
+                    <p class="text-gray-600 text-sm md:text-base">
+                        Simpan transaksi tanpa batas. Cetak ulang struk kapan saja dan filter transaksi sesuai kebutuhan.
+                    </p>
+                </div>
+                
+                <!-- Fitur 6 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Laporan</h3>
+                    <p class="text-gray-600 text-sm md:text-base">
+                        Laporan laba rugi, filter berdasarkan range waktu, rekonsiliasi order, edit orderan tanpa mengubah data asli, dan print laporan langsung.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabel Komparasi Minimalis - Ditambahkan di sini -->
+    <section id="komparasi" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">POSPop vs POS Lain</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Perbandingan jelas mengapa POSPop lebih hemat dan menguntungkan</p>
+                </div>
+                
+                <!-- Container Tabel -->
+                <div class="comparison-container bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="min-w-[600px]">
+                        <!-- Header Kolom -->
+                        <div class="grid grid-cols-3 border-b border-gray-200">
+                            <div class="p-4">
+                                <h3 class="text-gray-700 text-sm">Fitur</h3>
+                            </div>
+                            <div class="p-4 bg-blue-50 border-x border-gray-200">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-20 h-8 bg-contain bg-center bg-no-repeat mb-2" 
+                                         style="background-image: url('https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg')"></div>
+                                    <span class="text-blue-600 font-medium">[LISENSI LIFETIME]</span>
+                                    <span class="text-green-600 text-xs mt-1">BAYAR SEKALI 76RB</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 bg-gray-100 rounded flex items-center justify-center mb-2">
+                                        <i class="fas fa-cash-register text-gray-500"></i>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">POS Lain</span>
+                                    <span class="text-gray-500 text-xs mt-1">Berbayar</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Baris Data -->
+                        <!-- 1. Biaya Setup -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-bolt text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Biaya Awal</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-green-600 font-medium">Rp 76.000</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-gray-700">Rp 1.000.000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Biaya Bulanan -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-calendar text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Biaya Bulanan</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-green-600 font-medium">Free</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-gray-700">~Rp 30.000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Sewa Hosting -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-server text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Sewa Hosting</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-green-600 font-medium">Tidak Perlu</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-gray-700">Perlu</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Bisa Online -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-wifi text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Bisa Online</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-green-600">✓</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-green-600">✓</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Database -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-database text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Database</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-blue-600 text-sm">Mandiri</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-gray-500 text-sm">Tidak tahu</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Sistem Kasir -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-cash-register text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Sistem Kasir</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-green-600">✓</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-green-600">✓</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 7. Tambah Produk -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-box text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Tambah Produk</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-blue-600 font-medium">Unlimited</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-blue-600 font-medium">Unlimited</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Tambah Pelanggan -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-user text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Tambah Pelanggan</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-blue-600 font-medium">Unlimited</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-blue-600 font-medium">Unlimited</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. Rekap Transaksi -->
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-chart-bar text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Rekap Transaksi</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <span class="text-green-600">✓</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <span class="text-green-600">✓</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10. Akses -->
+                        <div class="grid grid-cols-3 hover:bg-gray-50">
+                            <div class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fas fa-mobile-alt text-blue-500 text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Akses Multi-Device</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200">
+                                <div class="text-center">
+                                    <div class="flex justify-center space-x-2">
+                                        <i class="fas fa-laptop text-gray-500 text-sm"></i>
+                                        <i class="fas fa-tablet-alt text-gray-500 text-sm"></i>
+                                        <i class="fas fa-mobile-alt text-gray-500 text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <div class="flex justify-center space-x-2">
+                                        <i class="fas fa-laptop text-gray-500 text-sm"></i>
+                                        <i class="fas fa-tablet-alt text-gray-500 text-sm"></i>
+                                        <i class="fas fa-mobile-alt text-gray-500 text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ringkasan Biaya -->
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-contain bg-center bg-no-repeat mr-2" 
+                                 style="background-image: url('https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg')"></div>
+                            <h3 class="text-gray-700 font-medium">POSPop</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Setup Awal</span>
+                                <span class="text-green-600 font-medium">Rp 76.000</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Biaya Bulanan</span>
+                                <span class="text-green-600 font-medium">Free</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-gray-100 pt-2 mt-2">
+                                <span class="text-gray-700 font-medium">Total Tahun 1</span>
+                                <span class="text-green-600 font-medium">Rp 76.000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center mr-2">
+                                <i class="fas fa-cash-register text-gray-500"></i>
+                            </div>
+                            <h3 class="text-gray-700 font-medium">POS Lain</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Setup Awal</span>
+                                <span class="text-gray-700">Rp 1.000.000</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Biaya Bulanan</span>
+                                <span class="text-gray-700">Rp 30.000/bln</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-gray-100 pt-2 mt-2">
+                                <span class="text-gray-700 font-medium">Total Tahun 1</span>
+                                <span class="text-gray-700 font-medium">Rp 1.360.000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Minimalis -->
+                <div class="mt-6 text-center">
+                    <div class="inline-flex items-center bg-blue-50 text-blue-700 px-4 py-2 rounded-lg">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span class="text-sm">POSPop menghemat hingga Rp 1,284.000 di tahun pertama</span>
+                    </div>
+                </div>
+
+                <!-- Indikator Mobile -->
+                <div class="md:hidden mt-4 text-center">
+                    <div class="inline-flex items-center text-gray-500 text-xs">
+                        <i class="fas fa-arrows-left-right mr-1"></i>
+                        <span>Geser untuk melihat semua kolom</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="harga" class="py-12 md:py-16 hero-gradient text-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4">Harga Promo Terbatas!</h2>
+                    <p class="text-purple-100 text-sm md:text-base">Investasi sekali untuk kemudahan selamanya</p>
+                </div>
+                
+                <div class="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-2xl overflow-hidden">
+                    <div class="md:flex">
+                        <div class="md:w-2/3 p-6 md:p-8 lg:p-12">
+                            <div class="mb-4 md:mb-6">
+                                <div class="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">
+                                    <i class="fas fa-fire mr-1"></i> STOK TERBATAS • HANYA 10 UNIT
+                                </div>
+                                <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Paket Lifetime</h3>
+                                <div class="flex items-baseline gap-3 md:gap-4 mb-2">
+                                    <span class="text-gray-400 line-through text-lg md:text-xl">Rp 229.000</span>
+                                    <span class="text-3xl md:text-4xl font-bold text-red-600">Rp 76.000</span>
+                                    <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-sm font-bold">DISKON 67%</span>
+                                </div>
+                                
+                                <div class="mt-4 flex flex-col gap-2">
+                                    <p class="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wider">Promo berakhir dalam:</p>
+                                    <div id="evergreen-countdown" class="flex gap-2">
+                                        <div class="flex flex-col items-center">
+                                            <span id="hours" class="bg-gradient-to-r from-red-500 to-orange-500 text-white text-lg md:text-xl font-bold py-1 px-3 rounded shadow-sm">23</span>
+                                            <span class="text-[10px] text-gray-400 uppercase mt-1">Jam</span>
+                                        </div>
+                                        <div class="text-gray-800 font-bold text-xl">:</div>
+                                        <div class="flex flex-col items-center">
+                                            <span id="minutes" class="bg-gradient-to-r from-red-500 to-orange-500 text-white text-lg md:text-xl font-bold py-1 px-3 rounded shadow-sm">00</span>
+                                            <span class="text-[10px] text-gray-400 uppercase mt-1">Menit</span>
+                                        </div>
+                                        <div class="text-gray-800 font-bold text-xl">:</div>
+                                        <div class="flex flex-col items-center">
+                                            <span id="seconds" class="bg-gradient-to-r from-red-500 to-orange-500 text-white text-lg md:text-xl font-bold py-1 px-3 rounded shadow-sm">00</span>
+                                            <span class="text-[10px] text-gray-400 uppercase mt-1">Detik</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2 md:space-y-3 mb-6 md:mb-8">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2 md:mr-3 text-sm md:text-base"></i>
+                                    <span class="text-gray-700 text-sm md:text-base">Tanpa biaya berlangganan</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2 md:mr-3 text-sm md:text-base"></i>
+                                    <span class="text-gray-700 text-sm md:text-base">Database di Google Drive</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2 md:mr-3 text-sm md:text-base"></i>
+                                    <span class="text-gray-700 text-sm md:text-base">Akses dari semua device</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2 md:mr-3 text-sm md:text-base"></i>
+                                    <span class="text-gray-700 text-sm md:text-base">Semua Fitur</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2 md:mr-3 text-sm md:text-base"></i>
+                                    <span class="text-gray-700 text-sm md:text-base">Update gratis selamanya</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-1/3 bg-gray-50 p-6 md:p-8 lg:p-12">
+                            <div class="text-center mb-4 md:mb-6">
+                                <div class="text-4xl md:text-5xl font-bold text-purple-600 mb-2">10.000+</div>
+                                <div class="text-gray-600 text-sm md:text-base">Pengguna Aktif</div>
+                            </div>
+                            
+                            <a href="https://wa.me/6287788082244?text=halo+kak+saya+mau+order+sistem+pos+kasir+digital+dengan+promo+76rb" 
+                               target="_blank" 
+                               class="block w-full bg-gradient-to-r from-green-500 to-green-600 text-white text-center py-4 md:py-6 px-12 rounded-lg font-bold hover:scale-105 transform transition duration-200 mb-3 md:mb-4 text-l md:text-base shadow-lg shadow-green-200 cta-button">
+                                <i class="fab fa-whatsapp mr-2"></i> ORDER VIA WHATSAPP
+                            </a>
+                            
+                            <p class="text-gray-500 text-xs md:text-sm text-center mb-3 md:mb-4">
+                                QRIS • GoPay • Dana • ShopeePay • Transfer Bank
+                            </p>
+                            
+                            <div class="mt-4 md:mt-6 pt-4 md:pt-6 border-t">
+                                <div class="flex items-center justify-center text-gray-600 mb-2">
+                                    <i class="fas fa-shield-alt text-green-500 mr-2 text-sm md:text-base"></i>
+                                    <span class="text-xs md:text-sm">Garansi 30 hari uang kembali</span>
+                                </div>
+                                <a href="/tutorial-awal.html" target="_blank" class="text-xs md:text-sm text-purple-600 hover:text-purple-700 block text-center">
+                                    <i class="fas fa-external-link-alt mr-1"></i> Lihat Tutorial Setup
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-6 md:mt-8 text-purple-100 text-sm md:text-base">
+                    <p>Sudah digunakan oleh 10,000+ pelaku usaha di Indonesia • Rating 4.9/5</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Siap Menggunakan POSPOP?</h2>
+                <p class="text-gray-600 mb-6 md:mb-8 text-sm md:text-base">Bergabung dengan 10.000+ pelaku usaha yang telah mempercayai POSPOP</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 mb-4 md:mb-6">
+                    <a href="https://wa.me/6287788082244?text=halo+kak+saya+mau+order+sistem+pos+kasir+digital+dengan+promo+76rb" 
+                       target="_blank" 
+                       class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg font-bold hover:from-green-600 hover:to-green-700 transition inline-flex items-center justify-center text-sm md:text-base cta-button">
+                        <i class="fab fa-whatsapp mr-2"></i> ORDER SEKARANG - Rp 76.000
+                    </a>
+                    <a href="#video" 
+                       class="border border-green-600 text-green-600 px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-green-50 transition inline-flex items-center justify-center text-sm md:text-base">
+                        <i class="fas fa-play-circle mr-2"></i> Tonton Demo Video
+                    </a>
+                </div>
+                
+                <div class="text-gray-500 text-xs md:text-sm">
+                    <p>Harga normal Rp 229.000 • Diskon 67% • Garansi 30 hari uang kembali • Stok terbatas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center">
+                <div class="flex justify-center items-center mb-4 md:mb-6">
+                    <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP" class="h-8">
+                    <span class="ml-3 text-xl font-semibold">POSPOP INDONESIA</span>
+                </div>
+                
+                <p class="text-gray-400 max-w-md mx-auto mb-6 md:mb-8 text-sm md:text-base">
+                    Solusi kasir modern yang simpel, hemat, dan aman untuk semua jenis usaha.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 md:mb-8">
+                    <a href="#beranda" class="text-gray-400 hover:text-white text-sm md:text-base">Beranda</a>
+                    <a href="#video" class="text-gray-400 hover:text-white text-sm md:text-base">Demo Video</a>
+                    <a href="#fitur" class="text-gray-400 hover:text-white text-sm md:text-base">Fitur</a>
+                    <a href="#fitur-kami" class="text-gray-400 hover:text-white text-sm md:text-base">Fitur Kami</a>
+                    <a href="#harga" class="text-gray-400 hover:text-white text-sm md:text-base">Harga</a>
+                    <a href="#komparasi" class="text-gray-400 hover:text-white text-sm md:text-base">Perbandingan</a>
+                    <a href="/tutorial-awal.html" target="_blank" class="text-gray-400 hover:text-white text-sm md:text-base">Tutorial</a>
+                    <a href="https://pospop.digitalove.id/privacy-policy" target="_blank" class="text-gray-400 hover:text-white text-sm md:text-base">Privacy Policy</a>
+                    <a href="/tos.html" target="_blank" class="text-gray-400 hover:text-white text-sm md:text-base">TOS</a>
+                </div>
+                
+                <div class="border-t border-gray-700 pt-6 md:pt-8">
+                    <p class="text-gray-400 text-xs md:text-sm">
+                        &copy; 2023 POSPOP - Aplikasi Kasir Modern. All rights reserved.
+                    </p>
+                    <div class="mt-2 space-x-4">
+                        <a href="https://pospop.digitalove.id/privacy-policy.html" class="text-gray-500 hover:text-gray-300 text-xs md:text-sm">Privacy Policy</a>
+                        <span class="text-gray-600">|</span>
+                        <a href="https://pospop.digitalove.id/tos.html" class="text-gray-500 hover:text-gray-300 text-xs md:text-sm">Terms of Service</a>
+                    </div>
+                    <p class="text-gray-500 text-xs md:text-sm mt-2">
+                        <a href="https://wa.me/6287788082244?text=halo+kak+saya+mau+order+sistem+pos+kasir+digital+dengan+promo+76rb" 
+                           target="_blank" 
+                           class="hover:text-gray-300">Order via WhatsApp</a> • 
+                        <a href="/tutorial-awal.html" target="_blank" class="hover:text-gray-300">Tutorial Setup</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6287788082244?text=halo+kak+saya+mau+order+sistem+pos+kasir+digital+dengan+promo+76rb" 
+       target="_blank" 
+       class="fixed bottom-4 right-4 md:bottom-6 md:right-6 bg-green-500 text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition z-40 animate-bounce">
+        <i class="fab fa-whatsapp text-lg md:text-xl"></i>
+    </a>
+
+    <script>
+        // Evergreen Countdown Timer
+        function startEvergreenCountdown() {
+            const STORAGE_KEY = 'pospop_promo_deadline';
+            const DURATION = 23 * 60 * 60 * 1000; // 23 Jam dalam milidetik
+
+            let deadline = localStorage.getItem(STORAGE_KEY);
+
+            // Jika tidak ada deadline atau deadline sudah lewat, buat deadline baru
+            if (!deadline || Date.now() > parseInt(deadline)) {
+                deadline = Date.now() + DURATION;
+                localStorage.setItem(STORAGE_KEY, deadline);
+            }
+
+            function update() {
+                const now = Date.now();
+                const distance = parseInt(deadline) - now;
+
+                if (distance < 0) {
+                    // Reset lagi ke 23 jam jika waktu habis (Evergreen effect)
+                    localStorage.setItem(STORAGE_KEY, Date.now() + DURATION);
+                    location.reload();
+                    return;
+                }
+
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+                document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+                document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+            }
+
+            setInterval(update, 1000);
+            update();
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Enhanced Slideshow Functionality
+        class Slideshow {
+            constructor() {
+                this.currentSlide = 0;
+                this.slides = document.querySelectorAll('.slide');
+                this.dots = document.querySelectorAll('.nav-dot');
+                this.counter = document.querySelector('.slideshow-counter');
+                this.caption = document.querySelector('.slideshow-caption');
+                this.slideInterval = null;
+                this.intervalTime = 4000;
+                
+                this.slideCaptions = [
+                    "Dashboard POS - Tampilan Utama",
+                    "Transaksi Kasir - Sistem Pembayaran",
+                    "Laporan - Analisis Keuangan",
+                    "Produk - Manajemen Stok",
+                    "Riwayat Order - Histori Transaksi",
+                    "Statistik - Dashboard Analisis"
+                ];
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.showSlide(0);
+                this.startAutoPlay();
+                this.checkImages();
+                
+                // Force redraw for mobile rendering
+                setTimeout(() => {
+                    this.slides.forEach(slide => {
+                        slide.style.display = 'none';
+                        slide.offsetHeight; // Trigger reflow
+                        slide.style.display = '';
+                    });
+                }, 100);
+            }
+            
+            showSlide(index) {
+                // Handle index boundaries
+                if (index >= this.slides.length) index = 0;
+                else if (index < 0) index = this.slides.length - 1;
+                
+                // Reset all slides and dots
+                this.slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                this.dots.forEach(dot => dot.classList.remove('active'));
+                
+                // Update current slide
+                this.currentSlide = index;
+                
+                // Show current slide and activate dot
+                this.slides[this.currentSlide].classList.add('active');
+                this.dots[this.currentSlide].classList.add('active');
+                
+                // Update counter and caption
+                if (this.counter) {
+                    this.counter.textContent = `${this.currentSlide + 1}/${this.slides.length}`;
+                }
+                if (this.caption) {
+                    this.caption.textContent = this.slideCaptions[this.currentSlide] || "Preview Aplikasi POSPOP";
+                }
+            }
+            
+            nextSlide() {
+                this.showSlide(this.currentSlide + 1);
+                this.resetInterval();
+            }
+            
+            prevSlide() {
+                this.showSlide(this.currentSlide - 1);
+                this.resetInterval();
+            }
+            
+            goToSlide(index) {
+                this.showSlide(index);
+                this.resetInterval();
+            }
+            
+            startAutoPlay() {
+                this.slideInterval = setInterval(() => this.nextSlide(), this.intervalTime);
+            }
+            
+            resetInterval() {
+                clearInterval(this.slideInterval);
+                this.startAutoPlay();
+            }
+            
+            checkImages() {
+                this.slides.forEach(slide => {
+                    // If image fails to load, show error state
+                    if (slide.complete && slide.naturalHeight === 0) {
+                        slide.classList.add('error');
+                    }
+                    
+                    // Add load event listener
+                    slide.addEventListener('load', () => {
+                        slide.classList.remove('error');
+                    });
+                    
+                    slide.addEventListener('error', () => {
+                        slide.classList.add('error');
+                    });
+                });
+            }
+            
+            setupEventListeners() {
+                // Arrow buttons
+                document.querySelector('.arrow-left').addEventListener('click', () => this.prevSlide());
+                document.querySelector('.arrow-right').addEventListener('click', () => this.nextSlide());
+                
+                // Dot navigation
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                });
+                
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') this.prevSlide();
+                    if (e.key === 'ArrowRight') this.nextSlide();
+                });
+                
+                // Pause on hover (desktop only)
+                const slideshowContainer = document.querySelector('.slideshow-container');
+                if (window.innerWidth > 768) {
+                    slideshowContainer.addEventListener('mouseenter', () => {
+                        clearInterval(this.slideInterval);
+                    });
+                    slideshowContainer.addEventListener('mouseleave', () => {
+                        this.resetInterval();
+                    });
+                }
+                
+                // Touch/swipe support
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                slideshowContainer.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    clearInterval(this.slideInterval); // Pause auto-slide during touch
+                });
+                
+                slideshowContainer.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    this.handleSwipe(touchStartX, touchEndX);
+                    this.resetInterval(); // Resume auto-slide
+                });
+            }
+            
+            handleSwipe(startX, endX) {
+                const swipeThreshold = 30; // Lower threshold for mobile
+                const diff = startX - endX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        // Swipe left - next slide
+                        this.nextSlide();
+                    } else {
+                        // Swipe right - previous slide
+                        this.prevSlide();
+                    }
+                }
+            }
+        }
+        
+        // Initialize all components when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Start countdown timer
+            startEvergreenCountdown();
+            
+            // Initialize slideshow
+            new Slideshow();
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if(this.getAttribute('href') === '#') return;
+                    
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if(target) {
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        const menuButtonIcon = document.querySelector('#mobile-menu-button i');
+                        
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                            menuButtonIcon.classList.remove('fa-times');
+                            menuButtonIcon.classList.add('fa-bars');
+                        }
+                        
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Handle WhatsApp CTA clicks - Add tracking
+            document.querySelectorAll('a[href*="whatsapp"]').forEach(link => {
+                link.addEventListener('click', function() {
+                    // You can add analytics tracking here
+                    console.log('WhatsApp CTA clicked:', this.href);
+                });
+            });
+            
+            // Show stock warning after 5 seconds
+            setTimeout(() => {
+                const stockWarning = document.createElement('div');
+                stockWarning.className = 'fixed bottom-20 right-4 md:bottom-24 md:right-6 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-30 animate-pulse text-sm';
+                stockWarning.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> Hanya 10 stok tersisa!';
+                document.body.appendChild(stockWarning);
+                
+                // Remove after 10 seconds
+                setTimeout(() => {
+                    stockWarning.remove();
+                }, 10000);
+            }, 5000);
+        });
+
+        // Handle window resize for slideshow
+        window.addEventListener('resize', () => {
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            const images = document.querySelectorAll('.slide');
+            
+            // Force reflow for images on resize
+            images.forEach(img => {
+                img.style.opacity = '0.99';
+                setTimeout(() => {
+                    img.style.opacity = '';
+                }, 10);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="theme-color" content="#764ba2">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192x192.png">
+    
+    <title>POSPOP - Aplikasi Kasir Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        #beranda {
+            background-image: url('https://pospop.digitalove.id/images/bgbg.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        #beranda::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(255,255,255,0.95),
+                rgba(255,255,255,0.85),
+                rgba(255,255,255,0.6)
+            );
+            z-index: 0;
+        }
+        #beranda > div {
+            position: relative;
+            z-index: 1;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: #f8f9fa;
+            height: 0;
+            padding-bottom: 75%;
+        }
+        @media (min-width: 768px) {
+            .slideshow-container {
+                height: 350px;
+                padding-bottom: 0;
+            }
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            object-fit: contain;
+            background: white;
+            padding: 10px;
+            display: block;
+            max-width: 100%;
+        }
+        .slide.active { opacity: 1; }
+        .slideshow-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 20;
+        }
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .nav-dot.active {
+            background-color: white;
+            transform: scale(1.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .slideshow-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .slideshow-arrow {
+                width: 44px;
+                height: 44px;
+            }
+        }
+        .arrow-left { left: 10px; }
+        .arrow-right { right: 10px; }
+        .slideshow-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 20;
+        }
+        .slideshow-counter {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            z-index: 20;
+        }
+        .slideshow-caption {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 6px 12px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 15;
+        }
+        .slide.error {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+        }
+        .comparison-container {
+            -webkit-overflow-scrolling: touch;
+            overflow-x: auto;
+        }
+        .comparison-container::-webkit-scrollbar { height: 4px; }
+        .comparison-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 2px;
+        }
+        .comparison-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        @media (max-width: 640px) {
+            #beranda .flex-col.lg\:flex-row { gap: 2rem; }
+            .slideshow-container { margin-top: 1rem; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="sticky top-0 z-50 bg-white border-b">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP" class="h-8">
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#beranda" class="text-gray-600 hover:text-purple-600">Beranda</a>
+                    <a href="#video" class="text-gray-600 hover:text-purple-600">Demo Video</a>
+                    <a href="#fitur" class="text-gray-600 hover:text-purple-600">Fitur</a>
+                    <a href="#fitur-kami" class="text-gray-600 hover:text-purple-600">Fitur Kami</a>
+                    <a href="#harga" class="text-gray-600 hover:text-purple-600">Harga</a>
+                    <a href="#komparasi" class="text-gray-600 hover:text-purple-600">Perbandingan</a>
+                    <a href="https://pospop.digitalove.id/privacy-policy.html" class="text-gray-600 hover:text-purple-600">Kebijakan Privasi</a>
+                    <a href="https://pospop.digitalove.id/tos.html" class="text-gray-600 hover:text-purple-600">Terms of Service</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <a href="/app.html" class="text-gray-600 hover:text-purple-600 hidden md:inline">Download App</a>
+                    <a href="https://pospop.myscalev.com/c/checkout?variant_ids=428703&qty=1" target="_blank" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm md:text-base md:px-5 md:py-2">Beli Sekarang</a>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#beranda" class="text-gray-600 hover:text-purple-600 py-2">Beranda</a>
+                    <a href="#video" class="text-gray-600 hover:text-purple-600 py-2">Demo Video</a>
+                    <a href="#fitur" class="text-gray-600 hover:text-purple-600 py-2">Fitur</a>
+                    <a href="#fitur-kami" class="text-gray-600 hover:text-purple-600 py-2">Fitur Kami</a>
+                    <a href="#harga" class="text-gray-600 hover:text-purple-600 py-2">Harga</a>
+                    <a href="#komparasi" class="text-gray-600 hover:text-purple-600 py-2">Perbandingan</a>
+                    <a href="/app.html" class="text-gray-600 hover:text-purple-600 py-2">Login</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="beranda" class="py-12 md:py-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col lg:flex-row items-center gap-8 md:gap-12">
+                    <div class="lg:w-1/2 w-full">
+                        <div class="inline-block bg-purple-50 text-purple-600 px-4 py-1 rounded-full mb-4 md:mb-6 text-sm font-medium">
+                            <i class="fas fa-bolt mr-1"></i> DISKON 77%
+                        </div>
+                        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 md:mb-6">Aplikasi Kasir Tanpa Biaya Berlangganan</h1>
+                        <p class="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
+                            Solusi kasir modern untuk semua jenis usaha. Cukup sekali beli, gunakan selamanya.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 md:mb-10">
+                            <a href="https://pospop.myscalev.com/c/checkout?variant_ids=428703&qty=1" target="_blank" class="bg-purple-600 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-purple-700 transition text-center text-sm md:text-base">
+                                <i class="fas fa-shopping-cart mr-2"></i> Beli Sekarang
+                            </a>
+                            <a href="#video" class="border border-gray-300 text-gray-700 px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-gray-50 transition text-center text-sm md:text-base">
+                                <i class="fas fa-play-circle mr-2"></i> Tonton Demo
+                            </a>
+                        </div>
+                        <div class="mb-6">
+                            <div class="flex items-center gap-3 md:gap-4">
+                                <span class="text-gray-400 line-through text-lg md:text-xl">Rp 1.000.000</span>
+                                <span class="text-2xl md:text-3xl font-bold text-red-600">Rp 229.000,-</span>
+                            </div>
+                            <p class="text-gray-500 text-sm md:text-base mt-2">Sekali bayar • Akses seumur hidup • Tanpa biaya berlangganan</p>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400 mr-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm md:text-base">4.8/5 dari 500+ ulasan</span>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full mt-8 md:mt-0">
+                        <img src="https://pospop.digitalove.id/images/hero.webp" alt="POSPOP - Aplikasi Kasir Modern" class="w-full h-auto rounded-lg object-contain" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="video" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Lihat Video Demo POSPOP</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Tonton video demo untuk melihat langsung fitur-fitur unggulan dan kemudahan penggunaan POSPOP</p>
+                </div>
+                <div class="mb-6 md:mb-8">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/hpmOH4Bo3lE" title="Demo Lengkap POSPOP - Aplikasi Kasir Modern" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
+                    <div class="text-center p-4 md:p-6 bg-gray-50 rounded-lg">
+                        <div class="text-purple-600 text-xl md:text-2xl mb-3"><i class="fas fa-play-circle"></i></div>
+                        <h3 class="font-semibold text-gray-800 mb-2 text-sm md:text-base">Demo Lengkap</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Lihat semua fitur utama dalam satu video</p>
+                    </div>
+                    <div class="text-center p-4 md:p-6 bg-gray-50 rounded-lg">
+                        <div class="text-purple-600 text-xl md:text-2xl mb-3"><i class="fas fa-cogs"></i></div>
+                        <h3 class="font-semibold text-gray-800 mb-2 text-sm md:text-base">Setup Mudah</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Tutorial setup dalam 15 menit</p>
+                    </div>
+                    <div class="text-center p-4 md:p-6 bg-gray-50 rounded-lg">
+                        <div class="text-purple-600 text-xl md:text-2xl mb-3"><i class="fas fa-question-circle"></i></div>
+                        <h3 class="font-semibold text-gray-800 mb-2 text-sm md:text-base">Punya Pertanyaan?</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Hubungi tim support kami</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fitur" class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 md:mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Mengapa POSPOP?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Fitur lengkap untuk mengelola bisnis Anda dengan mudah</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm">
+                    <div class="text-purple-600 text-xl md:text-2xl mb-4"><i class="fas fa-database"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Database Milik Anda</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Semua data tersimpan aman di Google Drive pribadi. Sepenuhnya milik Anda.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm">
+                    <div class="text-purple-600 text-xl md:text-2xl mb-4"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Akses Multi-Device</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Bisa digunakan di HP, tablet, dan laptop. Online dari mana saja.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm">
+                    <div class="text-purple-600 text-xl md:text-2xl mb-4"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Laporan Lengkap</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Dashboard statistik real-time dan laporan keuangan detail.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fitur-kami" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Fitur Kami</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Fitur lengkap untuk mendukung operasional bisnis Anda</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4"><i class="fas fa-cash-register"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">POS Kasir Sistem</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Lengkap untuk kebutuhan transaksi harian: pencarian item cepat, diskon, nama pelanggan, metode pembayaran, pajak, hingga perhitungan kembalian otomatis. Print Struk Pembelian Lengkap.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4"><i class="fas fa-chart-bar"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Dashboard Statistik</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Pantau performa bisnis lewat grafik omzet, produk terlaris, dan ranking item secara real-time.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4"><i class="fas fa-boxes"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Produk & Stok</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Kelola produk tanpa batas. Update stok, tambahkan gambar produk, atur satuan/unit dengan mudah.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4"><i class="fas fa-users"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Pelanggan</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Data pelanggan unlimited. Bisa update data dan kirim WhatsApp otomatis: promo, tagihan, ucapan terima kasih, hingga pesan custom.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4"><i class="fas fa-history"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Riwayat Order</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Simpan transaksi tanpa batas. Cetak ulang struk kapan saja dan filter transaksi sesuai kebutuhan.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl card-hover shadow-sm border border-gray-100">
+                    <div class="text-purple-600 text-2xl md:text-3xl mb-4"><i class="fas fa-file-alt"></i></div>
+                    <h3 class="text-lg md:text-xl font-semibold mb-3">Laporan</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Laporan laba rugi, filter berdasarkan range waktu, rekonsiliasi order, edit orderan tanpa mengubah data asli, dan print laporan langsung.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="komparasi" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">POSPop vs POS Lain</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Perbandingan jelas mengapa POSPop lebih hemat dan menguntungkan</p>
+                </div>
+                <div class="comparison-container bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="min-w-[600px]">
+                        <div class="grid grid-cols-3 border-b border-gray-200">
+                            <div class="p-4"><h3 class="text-gray-700 text-sm">Fitur</h3></div>
+                            <div class="p-4 bg-blue-50 border-x border-gray-200 text-center">
+                                <span class="text-blue-600 font-medium">[LISENSI LIFETIME]</span>
+                                <span class="block text-green-600 text-xs mt-1">BAYAR SEKALI</span>
+                            </div>
+                            <div class="p-4 text-center">
+                                <span class="text-gray-700 font-medium">POS Lain</span>
+                                <span class="block text-gray-500 text-xs mt-1">Berbayar</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4"><span class="text-gray-700">Biaya Awal</span></div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200 text-center"><span class="text-green-600 font-medium">Free</span></div>
+                            <div class="p-4 text-center"><span class="text-gray-700">Rp 1.000.000</span></div>
+                        </div>
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4"><span class="text-gray-700">Biaya Bulanan</span></div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200 text-center"><span class="text-green-600 font-medium">Free</span></div>
+                            <div class="p-4 text-center"><span class="text-gray-700">~Rp 30.000</span></div>
+                        </div>
+                        <div class="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div class="p-4"><span class="text-gray-700">Sewa Hosting</span></div>
+                            <div class="p-4 bg-blue-50/30 border-x border-gray-200 text-center"><span class="text-green-600 font-medium">Tidak Perlu</span></div>
+                            <div class="p-4 text-center"><span class="text-gray-700">Perlu</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="harga" class="py-12 md:py-16 hero-gradient text-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4">Harga Terjangkau</h2>
+                    <p class="text-purple-100 text-sm md:text-base">Investasi sekali untuk kemudahan selamanya</p>
+                </div>
+                <div class="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-2xl overflow-hidden">
+                    <div class="md:flex">
+                        <div class="md:w-2/3 p-6 md:p-8 lg:p-12">
+                            <div class="mb-4 md:mb-6">
+                                <div class="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">PROMO TERBATAS</div>
+                                <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Paket Lifetime</h3>
+                                <div class="flex items-baseline gap-3 md:gap-4 mb-2">
+                                    <span class="text-gray-400 line-through text-lg md:text-xl">Rp 1.000.000</span>
+                                    <span class="text-3xl md:text-4xl font-bold text-red-600">Rp 229.000</span>
+                                </div>
+                                <div class="mt-4 flex flex-col gap-2">
+                                    <p class="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wider">Berakhir dalam:</p>
+                                    <div id="evergreen-countdown" class="flex gap-2">
+                                        <div class="flex flex-col items-center">
+                                            <span id="hours" class="bg-gray-800 text-white text-lg md:text-xl font-bold py-1 px-3 rounded shadow-sm">23</span>
+                                            <span class="text-[10px] text-gray-400 uppercase mt-1">Jam</span>
+                                        </div>
+                                        <div class="text-gray-800 font-bold text-xl">:</div>
+                                        <div class="flex flex-col items-center">
+                                            <span id="minutes" class="bg-gray-800 text-white text-lg md:text-xl font-bold py-1 px-3 rounded shadow-sm">00</span>
+                                            <span class="text-[10px] text-gray-400 uppercase mt-1">Menit</span>
+                                        </div>
+                                        <div class="text-gray-800 font-bold text-xl">:</div>
+                                        <div class="flex flex-col items-center">
+                                            <span id="seconds" class="bg-gray-800 text-white text-lg md:text-xl font-bold py-1 px-3 rounded shadow-sm">00</span>
+                                            <span class="text-[10px] text-gray-400 uppercase mt-1">Detik</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 md:space-y-3 mb-6 md:mb-8 text-gray-700">
+                                <p><i class="fas fa-check text-green-500 mr-2"></i> Tanpa biaya berlangganan</p>
+                                <p><i class="fas fa-check text-green-500 mr-2"></i> Database di Google Drive</p>
+                                <p><i class="fas fa-check text-green-500 mr-2"></i> Akses dari semua device</p>
+                                <p><i class="fas fa-check text-green-500 mr-2"></i> Semua Fitur</p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/3 bg-gray-50 p-6 md:p-8 lg:p-12">
+                            <div class="text-center mb-4 md:mb-6">
+                                <div class="text-4xl md:text-5xl font-bold text-purple-600 mb-2">5.000+</div>
+                                <div class="text-gray-600 text-sm md:text-base">Pengguna Aktif</div>
+                            </div>
+                            <a href="#" class="block w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-center py-6 px-12 rounded-lg font-bold shadow-lg">
+                                Beli Sekarang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8 md:py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center">
+                <div class="flex justify-center items-center mb-4 md:mb-6">
+                    <span class="ml-3 text-xl font-semibold">POSPOP INDONESIA</span>
+                </div>
+                <p class="text-gray-400 text-xs md:text-sm">&copy; 2023 POSPOP. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/6287788082244" target="_blank" class="fixed bottom-4 right-4 md:bottom-6 md:right-6 bg-green-500 text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition z-40">
+        <i class="fab fa-whatsapp text-lg md:text-xl"></i>
+    </a>
+
+
+    <div id="pwa-install-popup" class="hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white rounded-xl shadow-2xl p-4 z-[60] border border-gray-100 transition-opacity duration-300 opacity-0">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-download text-purple-600"></i>
+            </div>
+            <div>
+                <h4 class="text-gray-800 font-bold text-sm">Install POSPOP</h4>
+                <p class="text-xs text-gray-500">Akses lebih cepat & offline</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <button id="btn-close-install" class="text-gray-400 hover:text-gray-600 px-2 py-1 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <button id="btn-install-pwa" class="bg-purple-600 text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-purple-700 transition shadow-md shadow-purple-200">
+                Install
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function startEvergreenCountdown() {
+            const STORAGE_KEY = 'pospop_promo_deadline';
+            const DURATION = 23 * 60 * 60 * 1000;
+            let deadline = localStorage.getItem(STORAGE_KEY);
+
+            if (!deadline || Date.now() > parseInt(deadline)) {
+                deadline = Date.now() + DURATION;
+                localStorage.setItem(STORAGE_KEY, deadline);
+            }
+
+            function update() {
+                const now = Date.now();
+                const distance = parseInt(deadline) - now;
+
+                if (distance < 0) {
+                    localStorage.setItem(STORAGE_KEY, Date.now() + DURATION);
+                    return;
+                }
+
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+                document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+                document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+            }
+
+            setInterval(update, 1000);
+            update();
+        }
+
+        document.addEventListener('DOMContentLoaded', startEvergreenCountdown);
+
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+
+        // Slideshow JS yang sudah difix handling-nya
+        class Slideshow {
+            constructor() {
+                this.currentSlide = 0;
+                this.slides = document.querySelectorAll('.slide');
+                this.dots = document.querySelectorAll('.nav-dot');
+                this.counter = document.querySelector('.slideshow-counter');
+                this.caption = document.querySelector('.slideshow-caption');
+                this.slideInterval = null;
+                this.intervalTime = 4000;
+                
+                this.slideCaptions = [
+                    "Pelanggan - Manajemen Data Pelanggan",
+                    "Transaksi Kasir - Sistem Pembayaran",
+                    "Laporan - Analisis Keuangan",
+                    "Order - Riwayat Transaksi",
+                    "Dashboard POS - Tampilan Utama",
+                    "Produk - Manajemen Stok"
+                ];
+                
+                this.init();
+            }
+            
+            init() {
+                // TAMBAHAN: Hentikan script jika tidak ada elemen slideshow di HTML
+                if (this.slides.length === 0) return;
+
+                this.setupEventListeners();
+                this.showSlide(0);
+                this.startAutoPlay();
+                this.checkImages();
+            }
+            
+            showSlide(index) {
+                if (this.slides.length === 0) return;
+                
+                if (index >= this.slides.length) index = 0;
+                else if (index < 0) index = this.slides.length - 1;
+                
+                this.slides.forEach(slide => slide.classList.remove('active'));
+                this.dots.forEach(dot => dot.classList.remove('active'));
+                
+                this.currentSlide = index;
+                this.slides[this.currentSlide].classList.add('active');
+                if (this.dots.length > 0) this.dots[this.currentSlide].classList.add('active');
+                
+                if (this.counter) this.counter.textContent = `${this.currentSlide + 1}/${this.slides.length}`;
+                if (this.caption) this.caption.textContent = this.slideCaptions[this.currentSlide] || "Preview";
+            }
+            
+            nextSlide() { this.showSlide(this.currentSlide + 1); this.resetInterval(); }
+            prevSlide() { this.showSlide(this.currentSlide - 1); this.resetInterval(); }
+            goToSlide(index) { this.showSlide(index); this.resetInterval(); }
+            
+            startAutoPlay() {
+                this.slideInterval = setInterval(() => this.nextSlide(), this.intervalTime);
+            }
+            
+            resetInterval() {
+                clearInterval(this.slideInterval);
+                this.startAutoPlay();
+            }
+            
+            checkImages() {
+                this.slides.forEach(slide => {
+                    if (slide.complete && slide.naturalHeight === 0) slide.classList.add('error');
+                    slide.addEventListener('load', () => slide.classList.remove('error'));
+                    slide.addEventListener('error', () => slide.classList.add('error'));
+                });
+            }
+            
+            setupEventListeners() {
+                const arrowLeft = document.querySelector('.arrow-left');
+                const arrowRight = document.querySelector('.arrow-right');
+                
+                if(arrowLeft) arrowLeft.addEventListener('click', () => this.prevSlide());
+                if(arrowRight) arrowRight.addEventListener('click', () => this.nextSlide());
+                
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new Slideshow();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    const menuButtonIcon = document.querySelector('#mobile-menu-button i');
+                    
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        menuButtonIcon.classList.replace('fa-times', 'fa-bars');
+                    }
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // REGISTRASI SERVICE WORKER PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Pastikan Anda membuat file sw.js di direktori root aplikasi
+                navigator.serviceWorker.register('/sw.js').catch(err => {
+                    console.log('Service Worker gagal didaftarkan:', err);
+                });
+            });
+        }
+
+    // --- LOGIKA INSTALL PWA ---
+let deferredPrompt;
+const installPopup = document.getElementById('pwa-install-popup');
+const btnInstall = document.getElementById('btn-install-pwa');
+const btnCloseInstall = document.getElementById('btn-close-install');
+
+// Tangkap event saat browser mendeteksi bahwa aplikasi siap di-install
+window.addEventListener('beforeinstallprompt', (e) => {
+    // 1. Cegah browser menampilkan prompt bawaannya sendiri (mini-infobar)
+    e.preventDefault();
+    
+    // 2. Simpan event tersebut agar bisa dipanggil nanti oleh tombol kita
+    deferredPrompt = e;
+    
+    // 3. Cek apakah user sudah menutup popup di sesi ini
+    const isPopupClosed = sessionStorage.getItem('pospop-install-closed');
+    
+    if (!isPopupClosed) {
+        // Tampilkan popup custom setelah delay 2 detik agar lebih natural
+        setTimeout(() => {
+            installPopup.classList.remove('hidden');
+            // Sedikit delay untuk efek transisi opacity Tailwind
+            setTimeout(() => {
+                installPopup.classList.remove('opacity-0');
+                installPopup.classList.add('opacity-100');
+            }, 50);
+        }, 2000);
+    }
+});
+
+// Aksi ketika tombol "Install" diklik
+btnInstall.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        // Sembunyikan popup kita
+        installPopup.classList.add('opacity-0');
+        setTimeout(() => installPopup.classList.add('hidden'), 300);
+        
+        // Tampilkan prompt instalasi bawaan browser
+        deferredPrompt.prompt();
+        
+        // Tunggu keputusan pengguna (Install atau Cancel)
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`Keputusan pengguna: ${outcome}`);
+        
+        // Bersihkan variabel karena event hanya bisa dipakai sekali
+        deferredPrompt = null;
+    }
+});
+
+// Aksi ketika tombol "Close" (X) diklik
+btnCloseInstall.addEventListener('click', () => {
+    installPopup.classList.add('opacity-0');
+    setTimeout(() => installPopup.classList.add('hidden'), 300);
+    
+    // Simpan status agar tidak mengganggu pengguna selama sesi ini berjalan
+    sessionStorage.setItem('pospop-install-closed', 'true');
+});
+
+// Opsional: Tangkap event jika aplikasi sukses di-install
+window.addEventListener('appinstalled', () => {
+    console.log('POSPOP berhasil di-install sebagai PWA!');
+    // Sembunyikan popup secara paksa jika masih terbuka
+    installPopup.classList.add('hidden');
+    deferredPrompt = null;
+});    
+    </script>
+
+</div>
+</body>
+</html>

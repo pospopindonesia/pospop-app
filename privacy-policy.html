@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebijakan Privasi - POSPOP</title>
+    <link rel="icon" href="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            height: 70px;
+            width: auto;
+        }
+        
+        h1 {
+            color: var(--dark-color);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .last-updated {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            text-align:center;
+        }
+        
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .lang-btn:hover:not(.active) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .policy-content {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .policy-version {
+            display: none;
+        }
+        
+        .policy-version.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 22px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin: 25px 0 10px;
+            font-size: 18px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+        
+        .highlight {
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .contact-info {
+            background-color: #f0f9ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px 0;
+            border-top: 1px solid var(--border-color);
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .policy-content {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .policy-content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .logo {
+                height: 50px;
+            }
+            
+            .language-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .lang-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg" alt="POSPOP Logo" class="logo">
+            </div>
+            <h1>Privacy Policy - Kebijakan Privasi</h1>
+            <p class="last-updated">Last Updated / Terakhir Diperbarui: January 21, 2026 / 21 Januari 2026</p>
+            
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="en">English Version</button>
+                <button class="lang-btn" data-lang="id">Versi Bahasa Indonesia</button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="policy-content">
+                <!-- English Version -->
+                <div class="policy-version active" id="english-version">
+                    <h2>Privacy Policy for POSPOP - Aplikasi POS dan Kasir tanpa berlangganan</h2>
+                    <p><strong>Last Updated: January 21, 2026</strong></p>
+                    
+                    <p>POSPOP - Aplikasi POS dan Kasir tanpa berlangganan ("the App") is a Point of Sale system developed using Google Apps Script. This policy describes how we manage your data within the App.</p>
+                    
+                    <h3>1. Information Collection and Use</h3>
+                    <p>Our App interacts with your Google Account to provide a seamless POS experience. We access:</p>
+                    <ul>
+                        <li><strong>Google User Identity:</strong> Your email address is used to identify the user logging into the system.</li>
+                        <li><strong>Google Sheets Data:</strong> The App reads and writes data to your Google Sheets to manage inventory, record sales, and generate reports.</li>
+                    </ul>
+                    
+                    <h3>2. Data Storage</h3>
+                    <p>All your business data is stored directly in your own Google Spreadsheet. We do not host or store your data on any external servers. Your data's security is managed by Google's security infrastructure.</p>
+                    
+                    <div class="highlight">
+                        <p><strong>Important:</strong> Your data remains in your Google Drive and is not transferred to any third-party servers.</p>
+                    </div>
+                    
+                    <h3>3. Data Privacy Commitment</h3>
+                    <ul>
+                        <li>We do not sell, trade, or share your personal or business information with third parties.</li>
+                        <li>The data accessed is used strictly for the App's functionality.</li>
+                        <li>We do not collect any data beyond what is necessary for the App to function.</li>
+                    </ul>
+                    
+                    <h3>4. Required Permissions (Scopes)</h3>
+                    <p>To function correctly, POSPOP requires:</p>
+                    <ul>
+                        <li><strong>https://www.googleapis.com/auth/spreadsheets:</strong> To manage your sales and inventory data.</li>
+                        <li><strong>https://www.googleapis.com/auth/userinfo.email:</strong> To identify the active cashier or admin.</li>
+                    </ul>
+                    <p>These permissions are standard for Google Apps Script applications that interact with Google Sheets and user accounts.</p>
+                    
+                    <div class="contact-info">
+                        <h3>5. Contact Us</h3>
+                        <p>For questions regarding this policy or data practices, please contact:</p>
+                        <p><strong>Email:</strong> pospopindonesia@gmail.com</p>
+                        <p>We are committed to responding to inquiries within 3 business days.</p>
+                    </div>
+                </div>
+                
+                <!-- Indonesian Version -->
+                <div class="policy-version" id="indonesian-version">
+                    <h2>Kebijakan Privasi POSPOP - Aplikasi POS dan Kasir tanpa berlangganan</h2>
+                    <p><strong>Terakhir Diperbarui: 21 Januari 2026</strong></p>
+                    
+                    <p>POSPOP - Aplikasi POS dan Kasir tanpa berlangganan ("Aplikasi") adalah sistem kasir yang dibangun menggunakan Google Apps Script. Kebijakan ini menjelaskan bagaimana kami mengelola data Anda.</p>
+                    
+                    <h3>1. Pengumpulan dan Penggunaan Informasi</h3>
+                    <p>Aplikasi kami berinteraksi dengan Akun Google Anda untuk menyediakan layanan kasir. Kami mengakses:</p>
+                    <ul>
+                        <li><strong>Identitas Pengguna Google:</strong> Alamat email Anda digunakan untuk mengidentifikasi pengguna yang masuk ke sistem.</li>
+                        <li><strong>Data Google Sheets:</strong> Aplikasi membaca dan menulis data ke Google Sheets Anda untuk mengelola inventaris, mencatat penjualan, dan membuat laporan.</li>
+                    </ul>
+                    
+                    <h3>2. Penyimpanan Data</h3>
+                    <p>Semua data bisnis Anda disimpan secara langsung di Google Spreadsheet milik Anda sendiri. Kami tidak menyimpan atau menghosting data Anda di server eksternal manapun. Keamanan data Anda sepenuhnya dilindungi oleh infrastruktur keamanan Google.</p>
+                    
+                    <div class="highlight">
+                        <p><strong>Penting:</strong> Data Anda tetap berada di Google Drive Anda dan tidak ditransfer ke server pihak ketiga manapun.</p>
+                    </div>
+                    
+                    <h3>3. Komitmen Privasi Data</h3>
+                    <ul>
+                        <li>Kami tidak menjual, memperdagangkan, atau membagikan informasi pribadi atau bisnis Anda kepada pihak ketiga.</li>
+                        <li>Data yang diakses hanya digunakan untuk fungsi internal Aplikasi.</li>
+                        <li>Kami tidak mengumpulkan data apa pun di luar yang diperlukan agar Aplikasi dapat berfungsi.</li>
+                    </ul>
+                    
+                    <h3>4. Izin yang Diperlukan (Scopes)</h3>
+                    <p>Agar dapat berjalan dengan baik, POSPOP memerlukan:</p>
+                    <ul>
+                        <li><strong>https://www.googleapis.com/auth/spreadsheets:</strong> Untuk mengelola data penjualan dan stok.</li>
+                        <li><strong>https://www.googleapis.com/auth/userinfo.email:</strong> Untuk mengidentifikasi kasir atau admin yang sedang aktif.</li>
+                    </ul>
+                    <p>Izin-izin ini adalah standar untuk aplikasi Google Apps Script yang berinteraksi dengan Google Sheets dan akun pengguna.</p>
+                    
+                    <div class="contact-info">
+                        <h3>5. Hubungi Kami</h3>
+                        <p>Jika Anda memiliki pertanyaan tentang kebijakan ini atau praktik pengelolaan data, silakan hubungi:</p>
+                        <p><strong>Email:</strong> pospopindonesia@gmail.com</p>
+                        <p>Kami berkomitmen untuk merespons pertanyaan dalam waktu 3 hari kerja.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2026 POSPOP - Aplikasi POS dan Kasir tanpa berlangganan. All rights reserved.</p>
+            <p>Dikembangkan dengan Google Apps Script</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const englishVersion = document.getElementById('english-version');
+            const indonesianVersion = document.getElementById('indonesian-version');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show selected language version
+                    const lang = this.getAttribute('data-lang');
+                    
+                    if (lang === 'en') {
+                        englishVersion.classList.add('active');
+                        indonesianVersion.classList.remove('active');
+                    } else {
+                        englishVersion.classList.remove('active');
+                        indonesianVersion.classList.add('active');
+                    }
+                });
+            });
+            
+            // Auto-detect language preference
+            const userLang = navigator.language || navigator.userLanguage;
+            if (userLang.startsWith('id')) {
+                // Switch to Indonesian version
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-lang') === 'id') {
+                        btn.classList.add('active');
+                    }
+                });
+                englishVersion.classList.remove('active');
+                indonesianVersion.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
