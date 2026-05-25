@@ -1,8 +1,8 @@
 const CACHE_NAME = 'poppop-pos-v2'; // Ubah versi ini jika Anda mengupdate HTML/CSS/JS
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  'https://pospopindonesia.github.io/pospop-app/',
+  'https://pospopindonesia.github.io/pospop-app/index.html',
+  'https://pospopindonesia.github.io/pospop-app/manifest.json',
   'https://cdn.tailwindcss.com',
   'https://popprint.id/wp-content/uploads/2026/01/2ppkasir-02.svg'
   // Jika nanti Anda memiliki file icon .png (192x192 & 512x512), tambahkan juga ke sini
