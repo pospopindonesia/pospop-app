@@ -1,4 +1,4 @@
-const CACHE_NAME = 'poppop-pos-v2'; // Ubah versi ini jika Anda mengupdate HTML/CSS/JS
+const CACHE_NAME = 'pospop-pos-v2.1'; // Ubah versi ini jika Anda mengupdate HTML/CSS/JS
 const ASSETS_TO_CACHE = [
   'https://pospopindonesia.github.io/pospop-app/',
   'https://pospopindonesia.github.io/pospop-app/index.html',
