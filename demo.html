@@ -92,11 +92,6 @@
             </div>
             
             <div class="flex items-center gap-1 md:gap-2">
-                <button onclick="toggleFullscreen()" 
-                        class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
-                        title="Layar Penuh">
-                    <i class="fas fa-expand text-sm"></i>
-                </button>
                 
                 <button onclick="refreshApp()" 
                         class="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-xl transition-colors"
@@ -172,19 +167,6 @@
             window.location.href = 'index.html';
         }
 
-        // Toggle mode fullscreen
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    showNotification('Gagal masuk mode layar penuh', 'error');
-                });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
-
         // Fungsi praktis untuk menyalin teks (username/password)
         function copyText(text, element) {
             navigator.clipboard.writeText(text).then(() => {
@@ -231,9 +213,6 @@
             if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
                 e.preventDefault();
                 refreshApp();
-            }
-            if (e.key === 'Escape' && document.fullscreenElement) {
-                document.exitFullscreen();
             }
         });
     </script>
